@@ -4,6 +4,12 @@
 >
 > **Avant le grand déploiement** : ne lancez jamais une routine directement sur l'ensemble d'un flux de production. Commencez par une exécution manuelle limitée à 2-3 éléments pour calibrer le comportement et le coût en tokens (principe de la Partie 1.7), puis activez la planification.
 
+---
+
+## Routines issues de cas d'usage métier (vague 1)
+
+> Ces routines illustrent le pattern à partir de scénarios concrets (canal de feedback, migration de langage précis) — adaptez les placeholders `<TODO: ...>` à votre propre domaine avant usage.
+
 ## 1. Triage automatique de retours utilisateurs / rapports de bugs
 
 **Contexte d'usage** : des retours utilisateurs (bugs, suggestions, plaintes) arrivent en continu sur un canal ou une file d'attente, et personne n'a le temps de tous les traiter au fil de l'eau.
@@ -49,6 +55,40 @@ cost per execution.
 ```
 
 **Reprise après interruption** : si l'exécution est interrompue (fermeture de session, erreur), relancer la routine reprend là où elle s'était arrêtée sans retraiter les modules déjà validés (voir `docs/guide-complet.md`, Partie 2.3).
+
+---
+
+## Routines génériques développeur (vague 2)
+
+> Cette routine s'applique telle quelle à n'importe quel projet avec une CI, sans dépendre d'un canal de communication ou d'un produit précis.
+
+## 3. Surveillance quotidienne de la CI sur les branches ouvertes
+
+**Contexte d'usage** : plusieurs branches sont ouvertes en parallèle et personne n'a le temps de surveiller manuellement l'état de leur CI chaque jour — certains échecs simples (flaky test, conflit de merge trivial, dépendance à réinstaller) traînent inutilement avant d'être corrigés.
+
+**Skills prérequis** : `skills/verify-code-change` et `skills/systematic-debugging`.
+
+```
+/schedule every day at 8am: check the CI status of all open branches
+in this repository.
+/goal: don't stop until every branch found this run with a failing CI
+is either fixed and verified with verify-code-change, or flagged with
+a clear explanation of why it could not be fixed automatically (e.g.
+ambiguous failure, missing external credentials, conflicting design
+decision). Use systematic-debugging when diagnosing a failure. Use a
+workflow: for simple failures (flaky test, lint error, trivial merge
+conflict), fix directly; for anything else, flag for human review
+rather than guessing. Use 10k tokens per branch.
+```
+
+**Ajustement dans la durée** : si peu de branches sont ouvertes en parallèle ou si la CI est lente à s'exécuter, espacez l'intervalle plutôt que de vérifier chaque jour :
+
+```
+/schedule every weekday at 8am: check the CI status of all open
+branches in this repository.
+```
+
+---
 
 ## Suivi et ajustement de toutes les routines
 

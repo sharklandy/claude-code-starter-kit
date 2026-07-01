@@ -8,6 +8,11 @@ Une bibliothèque de skills prêts à l'emploi et de templates de prompts `/goal
 
 Construire de bons skills et de bons prompts de boucle/workflow prend du temps et beaucoup d'itérations. Ce repo rassemble des templates génériques déjà structurés — description orientée déclenchement, section Gotchas, divulgation progressive — pour que vous n'ayez qu'à les adapter à votre stack plutôt que de partir d'une page blanche. Il s'accompagne d'un guide théorique complet si vous voulez comprendre le "pourquoi" derrière chaque pattern.
 
+Le repo distingue deux vagues de skills :
+
+- **Vague 1 — templates issus de cas d'usage métier** (`-template`) : illustrent un pattern à partir d'un scénario concret (checkout, migration de langage, triage de feedback produit) et nécessitent une adaptation à votre propre domaine avant usage.
+- **Vague 2 — skills génériques développeur** : utilisables tels quels sur n'importe quel projet, quelle que soit la stack, sans connaître le guide théorique au préalable. Ils complètent le guide théorique plutôt que d'en être extraits directement.
+
 ## Structure du repo
 
 ```
@@ -22,12 +27,21 @@ claude-code-starter-kit/
 │   ├── glossaire.md              # extrait rapide : définitions
 │   └── commandes-utiles.md       # extrait rapide : tableau des commandes
 ├── skills/                       # skills prêts à l'emploi (SKILL.md + Gotchas)
-│   ├── verify-frontend-change/
-│   ├── verify-form-change/
-│   ├── checkout-verifier-template/
-│   ├── bug-triage-runbook-template/
-│   ├── python-to-ts-migration-template/
-│   └── library-reference-template/
+│   ├── verify-frontend-change/            # vague 1
+│   ├── verify-form-change/                # vague 1
+│   ├── checkout-verifier-template/        # vague 1
+│   ├── bug-triage-runbook-template/       # vague 1
+│   ├── python-to-ts-migration-template/   # vague 1
+│   ├── library-reference-template/        # vague 1
+│   ├── verify-code-change/                # vague 2
+│   ├── adversarial-code-review/           # vague 2
+│   ├── commit-message-quality/            # vague 2
+│   ├── pr-description-generator/          # vague 2
+│   ├── systematic-debugging/              # vague 2
+│   ├── dependency-update-check/           # vague 2
+│   ├── new-feature-scaffold/              # vague 2
+│   ├── changelog-from-commits/            # vague 2
+│   └── safe-refactor/                     # vague 2
 ├── goals/
 │   └── goal-templates.md         # prompts /goal prêts à copier-coller
 ├── workflows/
