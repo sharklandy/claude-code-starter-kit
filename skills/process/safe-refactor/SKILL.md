@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: safe-refactor
 description: >
@@ -6,6 +5,7 @@ description: >
   coverage exists first. Trigger whenever asked to refactor, restructure,
   clean up, or rewrite existing code without changing its behavior.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Garde-fou avant un refactor (générique)
 

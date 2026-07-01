@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: new-feature-scaffold
 description: >
@@ -6,6 +5,7 @@ description: >
   Trigger whenever starting a new feature, module, or component from
   scratch.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Scaffolding d'une nouvelle fonctionnalité (générique)
 

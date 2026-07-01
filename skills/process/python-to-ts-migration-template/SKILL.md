@@ -1,4 +1,3 @@
-<!-- Source : docs/guide-complet.md, Partie 7, Cas 2 (python-to-ts-report-migration) — généralisé, sans référence à l'entreprise fictive d'origine -->
 ---
 name: python-to-ts-migration-template
 description: >
@@ -6,6 +5,7 @@ description: >
   service. Trigger whenever a task involves migrating a file under
   <TODO: chemin du dossier legacy, ex. /legacy/reports/**>.
 ---
+<!-- Source : docs/guide-complet.md, Partie 7, Cas 2 (python-to-ts-report-migration) — généralisé, sans référence à l'entreprise fictive d'origine -->
 
 # Migrer un module Python vers TypeScript
 

@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: pr-description-generator
 description: >
@@ -6,6 +5,7 @@ description: >
   range. Trigger whenever asked to open a PR, write a PR description, or
   summarize a branch's changes for review.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Générer une description de pull request (générique)
 

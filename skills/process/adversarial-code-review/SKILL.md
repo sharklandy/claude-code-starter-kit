@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: adversarial-code-review
 description: >
@@ -7,6 +6,7 @@ description: >
   Trigger before merging any non-trivial diff, or whenever asked for a
   second opinion / adversarial review / "fresh eyes" on a change.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Revue adversariale de code (générique, tout diff)
 

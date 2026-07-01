@@ -1,4 +1,3 @@
-<!-- Source : docs/guide-complet.md, Partie 7, Cas 1 (checkout-verifier) — généralisé, sans référence à l'entreprise fictive d'origine -->
 ---
 name: checkout-verifier-template
 description: >
@@ -8,6 +7,7 @@ description: >
   composants payment>/**, or any file importing your payment provider's
   SDK.
 ---
+<!-- Source : docs/guide-complet.md, Partie 7, Cas 1 (checkout-verifier) — généralisé, sans référence à l'entreprise fictive d'origine -->
 
 # Vérifier le tunnel de paiement
 

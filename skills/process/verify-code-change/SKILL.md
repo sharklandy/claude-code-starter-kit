@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: verify-code-change
 description: >
@@ -6,6 +5,7 @@ description: >
   existing test suite, and linter must all pass. Trigger after any edit
   that touches source files, regardless of language or stack.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Vérifier une modification de code (générique, tout langage)
 

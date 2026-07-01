@@ -1,4 +1,3 @@
-<!-- Skill de domaine (vague 2, divulgation progressive) — noyau court, voir reference/ pour le détail -->
 ---
 name: code-review
 description: >
@@ -7,6 +6,7 @@ description: >
   request to review code, review a diff/PR, or before any non-trivial
   commit.
 ---
+<!-- Skill de domaine (vague 2, divulgation progressive) — noyau court, voir reference/ pour le détail -->
 
 # Revue de code structurée (noyau)
 

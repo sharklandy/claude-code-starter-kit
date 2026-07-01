@@ -1,4 +1,3 @@
-<!-- Source : docs/guide-complet.md, Tutoriel 1 (Créer un skill de vérification de A à Z) -->
 ---
 name: verify-form-change
 description: >
@@ -6,6 +5,7 @@ description: >
   Trigger this whenever a task touches a <form>, an input validation
   rule, or a submit handler.
 ---
+<!-- Source : docs/guide-complet.md, Tutoriel 1 (Créer un skill de vérification de A à Z) -->
 
 # Vérifier un changement de formulaire
 

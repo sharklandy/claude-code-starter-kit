@@ -1,4 +1,3 @@
-<!-- Skill de domaine (vague 2) -->
 ---
 name: test-strategy
 description: >
@@ -8,6 +7,7 @@ description: >
   reviewing existing tests for reliability — not for generating test
   code directly.
 ---
+<!-- Skill de domaine (vague 2) -->
 
 # Stratégie de test (générique, stack-agnostique)
 
