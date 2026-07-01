@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.3.0] - 2026-07-01
+
+### Ajouté
+
+- `skills/choose-your-loop` : skill conversationnel qui intervient avant
+  la rédaction du prompt final, pour aider à choisir et valider le bon
+  mécanisme (`/goal`, workflow dynamique, routine `/loop`/`/schedule`,
+  ou simple boucle turn-based). Rappelle le concept visé, pose des
+  questions de cadrage structurées, applique un arbre de décision
+  explicite et traçable, détecte et reformule les critères de succès
+  flous, rend un verdict en trois issues (✅/⚠️/❌), puis propose un
+  prompt adapté à partir des templates existants de `goals/`,
+  `workflows/` et `routines/`.
+- `README.md` : mention du skill `choose-your-loop` dans la section
+  "Démarrer sur un projet".
+
 ## [1.2.0] - 2026-07-01
 
 ### Ajouté

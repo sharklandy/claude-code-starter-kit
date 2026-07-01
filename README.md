@@ -52,7 +52,8 @@ claude-code-starter-kit/
 │   ├── dependency-update-check/           # vague 2
 │   ├── new-feature-scaffold/              # vague 2
 │   ├── changelog-from-commits/            # vague 2
-│   └── safe-refactor/                     # vague 2
+│   ├── safe-refactor/                     # vague 2
+│   └── choose-your-loop/                  # vague 2 — à utiliser en amont de goals/, workflows/, routines/
 ├── goals/
 │   └── goal-templates.md         # prompts /goal prêts à copier-coller
 ├── workflows/
@@ -98,6 +99,8 @@ Ce prompt analyse automatiquement votre situation et se comporte différemment s
 - **Projet vierge** : Claude ne devine rien à partir de code qui n'existe pas. Il vous pose quelques questions de cadrage (stack envisagée, type d'application, convention de commit...), puis classe les skills installés en "actifs dès maintenant" et "en attente" du premier code réel.
 
 Voir [`docs/onboarding-prompt.md`](./docs/onboarding-prompt.md) pour le détail des deux cas et le prompt complet.
+
+Si vous n'êtes pas sûr du mécanisme à choisir (`/goal`, workflow dynamique, ou routine), utilisez le skill `choose-your-loop` **avant** de piocher dans `goals/`, `workflows/` ou `routines/` : il cadre la tâche, détecte un critère de succès trop flou, et valide (ou corrige) le choix avant de rédiger le prompt final.
 
 ## Comment adapter les templates à votre stack
 
