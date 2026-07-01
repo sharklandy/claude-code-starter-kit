@@ -640,7 +640,7 @@ Si une étape échoue, corriger le problème et reprendre depuis l'étape 1
 ```
 
 **Étape 4 — Vérifier l'installation globale.**
-C'est le piège récurrent évoqué dans l'article (et que vous rencontrez vous-même avec les skills Matt Pocock) : un skill peut s'installer localement à un projet au lieu d'être disponible globalement.
+C'est le piège récurrent évoqué dans l'article : un skill peut s'installer localement à un projet au lieu d'être disponible globalement.
 
 ```
 ls -la ~/.claude/skills/verify-form-change
