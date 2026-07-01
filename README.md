@@ -38,7 +38,14 @@ claude-code-starter-kit/
 ├── docs/
 │   ├── guide-complet.md          # théorie complète : boucles, workflows, skills
 │   ├── glossaire.md              # extrait rapide : définitions
-│   └── commandes-utiles.md       # extrait rapide : tableau des commandes
+│   ├── commandes-utiles.md       # extrait rapide : tableau des commandes
+│   └── subagents-vs-skills.md    # quand créer un subagent plutôt qu'un skill
+├── .claude/
+│   └── agents/                   # subagents prêts à l'emploi (installés par install.sh)
+│       ├── code-reviewer.md      # revue adversariale à contexte frais
+│       ├── test-runner.md        # build/tests/lint isolés, ne rapporte que les échecs
+│       ├── dependency-scout.md   # rapport d'impact avant un bump de dépendance
+│       └── bug-investigator.md   # reproduction + diagnostic de cause racine
 ├── skills/                       # skills prêts à l'emploi (SKILL.md + Gotchas)
 │   ├── process/                  # skills transverses, indépendants d'un domaine technique
 │   │   ├── verify-frontend-change/            # vague 1
@@ -83,7 +90,7 @@ claude-code-starter-kit/
 
 ## Installation
 
-Le script `install.sh` détecte chaque skill sous `skills/process/` et `skills/domains/` (y compris les sous-dossiers `reference/` d'un skill à divulgation progressive) et l'installe à plat vers l'emplacement de votre choix.
+Le script `install.sh` détecte chaque skill sous `skills/process/` et `skills/domains/` (y compris les sous-dossiers `reference/` d'un skill à divulgation progressive) et l'installe à plat vers l'emplacement de votre choix. Il installe aussi les subagents de `.claude/agents/` vers `~/.claude/agents/` (`--global`) ou `<projet>/.claude/agents/` (`--local`).
 
 **Installation globale** (disponible dans tous vos projets, usage personnel) :
 
@@ -123,6 +130,19 @@ Le [prompt d'onboarding](./docs/onboarding-prompt.md) ci-dessus automatise le re
 1. Gardez la structure existante — en particulier ne videz jamais la section `## Gotchas` : c'est le contenu au plus fort signal d'un skill (voir `docs/guide-complet.md`, Partie 3.3).
 2. Testez le déclenchement du skill dans une session Claude Code réelle : s'il ne se déclenche pas spontanément sur une tâche pertinente, la `description` du frontmatter n'est probablement pas assez explicite sur les mots-clés qui doivent l'activer.
 3. Enrichissez la section Gotchas au fil du temps, à chaque nouveau piège rencontré, plutôt que de corriger uniquement le cas isolé.
+
+## Subagents : les tâches qui méritent leur propre contexte
+
+En plus des skills, le repo fournit quatre **subagents** prêts à l'emploi (`.claude/agents/`, installés par `install.sh`). Un subagent tourne dans une fenêtre de contexte séparée, avec ses propres restrictions d'outils, et ne renvoie que sa synthèse — là où un skill guide la conversation principale :
+
+- **`code-reviewer`** — revue adversariale à contexte frais : l'agent n'a pas vu comment le code a été écrit, ne peut pas l'éditer, et précharge le skill de domaine `code-review` comme grille de lecture.
+- **`test-runner`** — lance build/tests/lint (détectés depuis la CI du projet) et ne rapporte que les échecs ; la sortie verbeuse des tests ne pollue jamais votre conversation.
+- **`dependency-scout`** — avant un bump de dépendance, absorbe changelogs et recherche d'usages, et renvoie un rapport d'impact ; il n'applique jamais la mise à jour lui-même.
+- **`bug-investigator`** — reproduit, bissecte et confirme la cause racine d'un bug, puis rend un diagnostic avec preuves ; le correctif se décide dans la conversation principale.
+
+Trois d'entre eux ont une **mémoire persistante par projet** (`memory: project`) : zones à risque, commandes de CI confirmées, tests flaky, patterns de bugs — des connaissances qui s'accumulent d'une session à l'autre et se partagent via git, au lieu d'être redécouvertes à chaque fois.
+
+Pour savoir quand créer un subagent plutôt qu'un skill (et pourquoi la plupart des briques doivent rester des skills), voir [`docs/subagents-vs-skills.md`](./docs/subagents-vs-skills.md).
 
 ## Utiliser les prompts /goal, /loop, /schedule et workflows
 
