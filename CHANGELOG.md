@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.2.0] - 2026-07-01
+
+### Ajouté
+
+- `docs/onboarding-prompt.md` : prompt d'onboarding prêt à copier-coller
+  dans Claude Code après `install.sh`, qui remplit automatiquement les
+  placeholders `<TODO: ...>` des skills installés.
+  - **Cas A — projet existant** : analyse du code, des dépendances, des
+    commandes de build/test/lint et de l'historique git pour déduire les
+    valeurs des placeholders avec confiance ; tout ce qui relève d'un
+    choix métier reste signalé "à compléter manuellement".
+  - **Cas B — projet vierge** : questions de cadrage courtes plutôt que
+    déduction à l'aveugle, puis classification des skills installés en
+    "actifs dès maintenant" / "en attente" du premier code réel.
+- `README.md` : bloc `## Quickstart` en tête de fichier (commandes brutes
+  uniquement), et nouvelle section `## Démarrer sur un projet` reliée au
+  prompt d'onboarding. La section "Comment adapter les templates à votre
+  stack" a été raccourcie pour éviter la duplication avec ces deux
+  nouveaux blocs.
+
 ## [1.1.0] - 2026-07-01
 
 ### Ajouté
