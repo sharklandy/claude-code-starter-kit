@@ -57,8 +57,13 @@ fi
 INSTALLED=()
 SKIPPED=()
 
-for skill_path in "${SKILLS_SRC}"/*/; do
-  [[ -d "${skill_path}" ]] || continue
+# Chaque skill est un dossier contenant un SKILL.md, rangé sous une
+# catégorie (skills/process/<nom>/, skills/domains/<nom>/...). On
+# installe chaque dossier de skill trouvé, à plat, sous ${DEST}/<nom>,
+# en copiant l'intégralité de son contenu (y compris un éventuel
+# sous-dossier reference/).
+while IFS= read -r -d '' skill_md; do
+  skill_path="$(dirname "${skill_md}")"
   skill_name="$(basename "${skill_path}")"
   dest_path="${DEST}/${skill_name}"
 
@@ -82,7 +87,7 @@ for skill_path in "${SKILLS_SRC}"/*/; do
   fi
 
   INSTALLED+=("${skill_name}")
-done
+done < <(find "${SKILLS_SRC}" -mindepth 3 -maxdepth 3 -type f -name "SKILL.md" -print0 | sort -z)
 
 echo ""
 echo "Résumé de l'installation :"

@@ -4,7 +4,9 @@ Merci de vouloir contribuer à ce starter kit ! Ce document décrit comment prop
 
 ## Proposer un nouveau skill
 
-1. Créez un dossier sous `skills/` en respectant la convention de nommage :
+1. Choisissez la bonne catégorie et créez un dossier en respectant la convention de nommage :
+   - **`skills/process/<nom>/`** pour un skill transverse, indépendant d'un domaine technique précis (vérification, discipline de l'agent, automatisation de processus...).
+   - **`skills/domains/<nom>/`** pour un skill lié à un domaine technique (revue de code, stratégie de test, sécurité...).
    - **kebab-case** pour le nom du dossier.
    - Suffixe **`-template`** si le skill est générique et destiné à être adapté (contient des placeholders `<TODO: ...>`), pas de suffixe s'il est directement utilisable tel quel.
 2. Le dossier doit contenir au minimum un fichier `SKILL.md` avec :
@@ -14,6 +16,16 @@ Merci de vouloir contribuer à ce starter kit ! Ce document décrit comment prop
    - Une section `## Gotchas` **non vide** — même si elle contient des placeholders `<TODO: ...>` à compléter par l'utilisateur final, elle ne doit jamais être totalement absente.
 3. Si le skill est généralisé à partir d'un cas d'usage réel ou fictif, retirez tout nom d'entreprise, de produit ou détail non réutilisable, et remplacez les valeurs spécifiques par des placeholders `<TODO: description de ce qu'il faut adapter>`.
 4. Testez que le skill se déclenche correctement dans une session Claude Code réelle avant de soumettre votre PR.
+5. Testez que `install.sh` installe correctement votre nouveau skill (mode `--local` sur un répertoire temporaire) avant de soumettre votre PR.
+
+## Skills de domaine volumineux : le pattern `reference/`
+
+Si un skill de domaine devient trop volumineux pour rester dans un seul `SKILL.md` lisible (plusieurs centaines de lignes couvrant des sous-thèmes distincts), appliquez la **divulgation progressive** plutôt que d'alourdir le noyau :
+
+- Gardez un `SKILL.md` **court** (~150-250 lignes) qui définit le processus général et sait *quand* consulter chaque référence — c'est ce fichier qui est toujours chargé.
+- Placez le détail par sous-thème dans un sous-dossier `reference/` (ex. `reference/security.md`, `reference/performance.md`), que Claude ne lira qu'au moment pertinent.
+- Le noyau doit **renvoyer explicitement** vers chaque fichier de référence en précisant la condition de déclenchement ("si le diff touche X, consulte `reference/Y.md`") — il ne doit **jamais résumer** le contenu de la référence, sous peine de la rendre redondante.
+- Voir `skills/domains/code-review/` comme exemple de référence pour ce pattern.
 
 ## Proposer un prompt `/goal`, un workflow ou une routine
 

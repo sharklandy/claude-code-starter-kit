@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.4.0] - 2026-07-01
+
+### Ajouté
+
+- Réorganisation de `skills/` en deux catégories : `skills/process/`
+  (skills transverses, les 16 skills existants) et `skills/domains/`
+  (skills liés à un domaine technique).
+- `skills/domains/code-review/` : skill de revue de code à divulgation
+  progressive — noyau `SKILL.md` court + `reference/security.md`,
+  `reference/performance.md`, `reference/database-queries.md`, chacun
+  formulé en questions de raisonnement contextuel plutôt qu'en
+  checklist de patterns à chercher aveuglément.
+- `skills/domains/test-strategy/SKILL.md` : aide à décider quoi tester
+  et à quel niveau, détecte les tests fragiles.
+- `skills/process/readme-generator/SKILL.md` : génère ou met à jour un
+  README à partir de l'analyse du projet.
+- `skills/process/env-doctor/SKILL.md` : diagnostique un environnement
+  de développement cassé (runtime, dépendances, variables
+  d'environnement, ports).
+- `skills/process/avoid-agentic-pitfalls/SKILL.md` : discipline
+  comportementale transversale contre les suppositions silencieuses, la
+  sur-ingénierie et les modifications hors-scope.
+- `install.sh` : détecte désormais les skills sur deux niveaux de
+  profondeur (`process/`, `domains/`) et copie chaque skill installé
+  avec l'intégralité de son contenu, y compris un sous-dossier
+  `reference/`.
+- `README.md` et `CONTRIBUTING.md` mis à jour pour documenter la
+  catégorisation `process/`/`domains/` et le pattern `reference/` de
+  divulgation progressive.
+
 ## [1.3.0] - 2026-07-01
 
 ### Ajouté

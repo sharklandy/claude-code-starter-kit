@@ -24,6 +24,8 @@ Le repo distingue deux vagues de skills :
 - **Vague 1 — templates issus de cas d'usage métier** (`-template`) : illustrent un pattern à partir d'un scénario concret (checkout, migration de langage, triage de feedback produit) et nécessitent une adaptation à votre propre domaine avant usage.
 - **Vague 2 — skills génériques développeur** : utilisables tels quels sur n'importe quel projet, quelle que soit la stack, sans connaître le guide théorique au préalable. Ils complètent le guide théorique plutôt que d'en être extraits directement.
 
+Les skills sont rangés en deux catégories dans `skills/` : `process/` pour les skills transverses (indépendants d'un domaine technique précis) et `domains/` pour les skills liés à un domaine (revue de code, stratégie de test...). Un skill de domaine volumineux suit le principe de **divulgation progressive** (voir `docs/guide-complet.md`, Partie 3.3) : un noyau `SKILL.md` court, toujours chargé, et un sous-dossier `reference/` avec le détail, que Claude ne consulte que lorsque le contexte le justifie — voir `skills/domains/code-review/` comme exemple.
+
 ## Structure du repo
 
 ```
@@ -38,22 +40,34 @@ claude-code-starter-kit/
 │   ├── glossaire.md              # extrait rapide : définitions
 │   └── commandes-utiles.md       # extrait rapide : tableau des commandes
 ├── skills/                       # skills prêts à l'emploi (SKILL.md + Gotchas)
-│   ├── verify-frontend-change/            # vague 1
-│   ├── verify-form-change/                # vague 1
-│   ├── checkout-verifier-template/        # vague 1
-│   ├── bug-triage-runbook-template/       # vague 1
-│   ├── python-to-ts-migration-template/   # vague 1
-│   ├── library-reference-template/        # vague 1
-│   ├── verify-code-change/                # vague 2
-│   ├── adversarial-code-review/           # vague 2
-│   ├── commit-message-quality/            # vague 2
-│   ├── pr-description-generator/          # vague 2
-│   ├── systematic-debugging/              # vague 2
-│   ├── dependency-update-check/           # vague 2
-│   ├── new-feature-scaffold/              # vague 2
-│   ├── changelog-from-commits/            # vague 2
-│   ├── safe-refactor/                     # vague 2
-│   └── choose-your-loop/                  # vague 2 — à utiliser en amont de goals/, workflows/, routines/
+│   ├── process/                  # skills transverses, indépendants d'un domaine technique
+│   │   ├── verify-frontend-change/            # vague 1
+│   │   ├── verify-form-change/                # vague 1
+│   │   ├── checkout-verifier-template/        # vague 1
+│   │   ├── bug-triage-runbook-template/       # vague 1
+│   │   ├── python-to-ts-migration-template/   # vague 1
+│   │   ├── library-reference-template/        # vague 1
+│   │   ├── verify-code-change/                # vague 2
+│   │   ├── adversarial-code-review/           # vague 2
+│   │   ├── commit-message-quality/            # vague 2
+│   │   ├── pr-description-generator/          # vague 2
+│   │   ├── systematic-debugging/              # vague 2
+│   │   ├── dependency-update-check/           # vague 2
+│   │   ├── new-feature-scaffold/              # vague 2
+│   │   ├── changelog-from-commits/            # vague 2
+│   │   ├── safe-refactor/                     # vague 2
+│   │   ├── choose-your-loop/                  # vague 2 — à utiliser en amont de goals/, workflows/, routines/
+│   │   ├── readme-generator/                  # vague 2
+│   │   ├── env-doctor/                        # vague 2
+│   │   └── avoid-agentic-pitfalls/            # vague 2
+│   └── domains/                  # skills de domaine, à divulgation progressive si volumineux
+│       ├── code-review/
+│       │   ├── SKILL.md          # noyau court, toujours chargé
+│       │   └── reference/        # détail chargé par Claude à la demande
+│       │       ├── security.md
+│       │       ├── performance.md
+│       │       └── database-queries.md
+│       └── test-strategy/
 ├── goals/
 │   └── goal-templates.md         # prompts /goal prêts à copier-coller
 ├── workflows/
@@ -69,7 +83,7 @@ claude-code-starter-kit/
 
 ## Installation
 
-Le script `install.sh` copie les dossiers de `skills/` vers l'emplacement de votre choix.
+Le script `install.sh` détecte chaque skill sous `skills/process/` et `skills/domains/` (y compris les sous-dossiers `reference/` d'un skill à divulgation progressive) et l'installe à plat vers l'emplacement de votre choix.
 
 **Installation globale** (disponible dans tous vos projets, usage personnel) :
 
