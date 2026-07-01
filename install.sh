@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Installe les skills de ce dépôt dans un répertoire ~/.claude/skills
+# (--global) ou <chemin>/.claude/skills (--local <chemin>).
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SKILLS_SRC="${SCRIPT_DIR}/skills"
+
+usage() {
+  echo "Usage: $0 --global | --local <chemin>"
+  echo ""
+  echo "  --global          installe les skills dans ~/.claude/skills/"
+  echo "  --local <chemin>  installe les skills dans <chemin>/.claude/skills/"
+  exit 1
+}
+
+if [[ $# -eq 0 ]]; then
+  usage
+fi
+
+case "$1" in
+  --global)
+    DEST="${HOME}/.claude/skills"
+    ;;
+  --local)
+    if [[ $# -lt 2 ]]; then
+      echo "Erreur : --local nécessite un chemin." >&2
+      usage
+    fi
+    TARGET_DIR="$2"
+    if [[ ! -d "${TARGET_DIR}" ]]; then
+      echo "Erreur : le chemin '${TARGET_DIR}' n'existe pas ou n'est pas un répertoire." >&2
+      exit 1
+    fi
+    DEST="${TARGET_DIR}/.claude/skills"
+    ;;
+  -h|--help)
+    usage
+    ;;
+  *)
+    echo "Erreur : option inconnue '$1'." >&2
+    usage
+    ;;
+esac
+
+if [[ ! -d "${SKILLS_SRC}" ]]; then
+  echo "Erreur : dossier source '${SKILLS_SRC}' introuvable." >&2
+  exit 1
+fi
+
+if ! mkdir -p "${DEST}" 2>/dev/null; then
+  echo "Erreur : impossible de créer le répertoire de destination '${DEST}' (permissions ?)." >&2
+  exit 1
+fi
+
+INSTALLED=()
+SKIPPED=()
+
+for skill_path in "${SKILLS_SRC}"/*/; do
+  [[ -d "${skill_path}" ]] || continue
+  skill_name="$(basename "${skill_path}")"
+  dest_path="${DEST}/${skill_name}"
+
+  if [[ -e "${dest_path}" ]]; then
+    read -r -p "Le skill '${skill_name}' existe déjà dans ${DEST}. L'écraser ? [y/N] " reply
+    case "${reply}" in
+      [yY]|[yY][eE][sS])
+        rm -rf "${dest_path}"
+        ;;
+      *)
+        echo "  -> ignoré : ${skill_name}"
+        SKIPPED+=("${skill_name}")
+        continue
+        ;;
+    esac
+  fi
+
+  if ! cp -r "${skill_path}" "${dest_path}"; then
+    echo "Erreur : échec de la copie de '${skill_name}' vers '${dest_path}'." >&2
+    exit 1
+  fi
+
+  INSTALLED+=("${skill_name}")
+done
+
+echo ""
+echo "Résumé de l'installation :"
+echo "  Destination : ${DEST}"
+if [[ ${#INSTALLED[@]} -gt 0 ]]; then
+  echo "  Skills installés (${#INSTALLED[@]}) :"
+  for s in "${INSTALLED[@]}"; do
+    echo "    - ${s}"
+  done
+else
+  echo "  Aucun skill installé."
+fi
+if [[ ${#SKIPPED[@]} -gt 0 ]]; then
+  echo "  Skills ignorés (${#SKIPPED[@]}) :"
+  for s in "${SKIPPED[@]}"; do
+    echo "    - ${s}"
+  done
+fi
