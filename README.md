@@ -4,6 +4,23 @@
 
 ## Quickstart
 
+**Voie recommandée — plugin Claude Code** (une commande, mises à jour intégrées) :
+
+```
+/plugin marketplace add sharklandy/claude-code-starter-kit
+/plugin install starter-kit-essentials@claude-code-starter-kit
+```
+
+`starter-kit-essentials` installe le noyau : 6 skills génériques développeur + les 4 subagents. Pour tout le kit (21 skills, templates vague 1 inclus) :
+
+```
+/plugin install starter-kit-full@claude-code-starter-kit
+```
+
+Les skills d'un plugin sont préfixés par son nom (ex. `/starter-kit-essentials:code-review`) — c'est ce qui garantit zéro collision avec vos skills existants. Pour recevoir les mises à jour : `/plugin marketplace update claude-code-starter-kit`.
+
+**Voie alternative — copie physique** (fichiers modifiables localement, noms courts sans préfixe) :
+
 ```bash
 git clone https://github.com/sharklandy/claude-code-starter-kit.git
 cd claude-code-starter-kit
@@ -11,7 +28,7 @@ chmod +x install.sh
 ./install.sh --global   # ou --local /chemin/vers/votre/projet
 ```
 
-Puis collez le [prompt d'onboarding](./docs/onboarding-prompt.md) dans Claude Code pour que les skills s'adaptent automatiquement à votre projet.
+Dans les deux cas, collez ensuite le [prompt d'onboarding](./docs/onboarding-prompt.md) dans Claude Code pour que les skills s'adaptent automatiquement à votre projet.
 
 Une bibliothèque de skills prêts à l'emploi et de templates de prompts `/goal`, `/loop`, `/schedule` et workflows dynamiques pour démarrer avec Claude Code en quelques minutes.
 

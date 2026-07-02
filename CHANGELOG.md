@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.5.0] - en cours
+
+### Ajouté
+
+- `.claude-plugin/marketplace.json` : le dépôt est désormais un
+  marketplace de plugins Claude Code natif (proposition 01 de la roadmap
+  v2). Installation en une commande :
+  `/plugin marketplace add sharklandy/claude-code-starter-kit`, puis
+  `/plugin install starter-kit-essentials@claude-code-starter-kit`
+  (noyau : 6 skills vague 2 + 4 subagents) ou
+  `starter-kit-full@claude-code-starter-kit` (les 21 skills + 4
+  subagents). Mises à jour via `/plugin marketplace update`. Vérifié en
+  installation réelle : les composants s'enregistrent sous leur
+  namespace (`starter-kit-*:<nom>`), et le préchargement
+  `skills: [code-review]` des subagents résout correctement le skill
+  du même plugin.
+- `README.md` : le Quickstart documente la voie plugin (recommandée) et
+  conserve `install.sh` comme voie alternative (copie physique, noms de
+  skills courts sans préfixe).
+- **Important pour les mainteneurs** : le champ `version` des deux
+  entrées de `marketplace.json` doit être bumpé à chaque release, sinon
+  les utilisateurs ne reçoivent pas la mise à jour.
+
 ## [1.4.0] - 2026-07-01
 
 ### Ajouté
