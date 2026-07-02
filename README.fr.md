@@ -35,6 +35,16 @@ Dans les deux cas, collez ensuite le [prompt d'onboarding](./docs/onboarding-pro
 
 Une bibliothèque de skills prêts à l'emploi et de templates de prompts `/goal`, `/loop`, `/schedule` et workflows dynamiques pour démarrer avec Claude Code en quelques minutes.
 
+## Le voir fonctionner
+
+Session réelle enregistrée (pas une maquette) : l'utilisateur demande une relecture de son diff non commité — le skill `code-review` **se déclenche de lui-même** (`Skill(code-review)`) et la revue revient labellisée, avec un off-by-one et un magic number injustifié détectés :
+
+![Le skill code-review se déclenchant spontanément sur une demande de relecture](./docs/assets/demo-code-review.svg)
+
+Et le subagent `test-runner` qui exécute toute une suite de tests dans son propre contexte et ne rapporte **que l'échec** — la sortie verbeuse des tests ne touche jamais votre conversation :
+
+![Le subagent test-runner ne rapportant que le test en échec](./docs/assets/demo-test-runner.svg)
+
 ## Pourquoi ce repo
 
 Construire de bons skills et de bons prompts de boucle/workflow prend du temps et beaucoup d'itérations. Ce repo rassemble des templates génériques déjà structurés — description orientée déclenchement, section Gotchas, divulgation progressive — pour que vous n'ayez qu'à les adapter à votre stack plutôt que de partir d'une page blanche. Il s'accompagne d'un guide théorique complet si vous voulez comprendre le "pourquoi" derrière chaque pattern.

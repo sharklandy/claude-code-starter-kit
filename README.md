@@ -7,6 +7,16 @@
 
 A library of ready-to-use skills, subagents, and prompt templates for `/goal`, `/loop`, `/schedule` and dynamic workflows — get productive with Claude Code in minutes instead of iterating on prompts for weeks.
 
+## See it work
+
+Real recorded session (not a mock-up): the user asks for a review of their uncommitted diff — the `code-review` skill **triggers on its own** (`Skill(code-review)`), and the review comes back with severity labels, catching an off-by-one and an unexplained magic number:
+
+![The code-review skill triggering spontaneously on a diff review request](./docs/assets/demo-code-review.svg)
+
+And the `test-runner` subagent running an entire test suite in its own context, reporting **only the failure** — the verbose test output never touches your conversation:
+
+![The test-runner subagent reporting only the failing test](./docs/assets/demo-test-runner.svg)
+
 ## Quickstart
 
 **Recommended — install as a Claude Code plugin** (one command, built-in updates):

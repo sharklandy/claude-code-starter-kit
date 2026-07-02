@@ -44,6 +44,18 @@
 - Reste à faire côté GitHub (actions sur le remote, hors périmètre de
   cette branche) : description du dépôt, topics, releases taguées.
 
+- Démos enregistrées dans le README (proposition 05) :
+  `docs/assets/demo-code-review.svg` (le skill `code-review` se
+  déclenche spontanément sur une demande de relecture — invocation
+  `Skill(code-review)` visible — et rend une synthèse labellisée) et
+  `docs/assets/demo-test-runner.svg` (le subagent
+  `starter-kit-essentials:test-runner` exécute la suite et ne rapporte
+  que l'échec). Sessions réelles capturées via `script --log-timing`,
+  converties en asciicast (temps morts plafonnés à 2 s) puis en SVG
+  animé via `svg-term-cli` ; informations personnelles caviardées à
+  longueur constante. Non réalisé, à décider : le « avant/après »
+  bonus de la proposition.
+
 ### Modifié
 
 - La promesse « utilisable tel quel » est désormais tenue (proposition
