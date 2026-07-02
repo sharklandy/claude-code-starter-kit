@@ -1,0 +1,24 @@
+{
+  "skill_name": "avoid-agentic-pitfalls",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "corrige le bug d'affichage de la date sur la page profil",
+      "expected_output": "Un correctif strictement limité au bug demandé : toute ambiguïté (format de date attendu, fuseau horaire) est signalée explicitement plutôt qu'absorbée silencieusement, et aucun fichier hors scope n'est modifié.",
+      "assertions": [
+        "Les suppositions faites (format attendu, fuseau...) sont annoncées explicitement dans la réponse",
+        "Seuls les fichiers directement concernés par le bug sont modifiés",
+        "Aucun refactor, renommage ou nettoyage adjacent non demandé n'est inclus dans le diff"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "ajoute un paramètre optionnel de tri à cette fonction de liste",
+      "expected_output": "L'ajout demandé, sans généralisation spéculative : pas de système de tri pluggable, pas de gestion de cas non demandés, pas d'abstraction anticipée.",
+      "assertions": [
+        "Le diff n'introduit aucune abstraction non exigée par la demande (interface, configuration extensible, gestion de cas futurs)",
+        "La complexité ajoutée est proportionnée : un paramètre et son usage, pas un framework de tri"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "skill_name": "code-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "fais une revue de code de mon diff non commité (git diff) avant que je le merge",
+      "expected_output": "Une revue structurée du diff suivant le processus en 4 phases du skill, avec une synthèse où chaque finding porte un label de sévérité (🔴/🟠/🟡/⚪), cite fichier:ligne et justifie le label par un raisonnement contextuel.",
+      "assertions": [
+        "La synthèse utilise les labels de sévérité 🔴/🟠/🟡/⚪ définis par le skill",
+        "Chaque finding cite le fichier et la ligne concernés",
+        "Chaque finding explique pourquoi le contexte justifie le label, pas seulement quel pattern a été détecté",
+        "La revue commence par identifier le scope et l'intention du changement avant l'analyse ligne par ligne"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "peux-tu relire cette PR ? elle ajoute une requête SQL qui filtre les commandes par utilisateur dans la boucle de rendu",
+      "expected_output": "Une revue qui, parce que le diff touche une requête base de données dans une boucle, applique le raisonnement de reference/database-queries.md (problème N+1, requête dans une boucle) au lieu de se limiter à une lecture superficielle.",
+      "assertions": [
+        "La revue identifie le risque de requêtes N+1 lié à la requête exécutée dans une boucle",
+        "Le finding base de données est labellisé avec une sévérité explicite et justifiée",
+        "La revue ne se contente pas de matcher un pattern : elle raisonne sur la taille et la fréquence réelles du chemin concerné"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "review this two-line diff that renames a local variable in a test helper",
+      "expected_output": "Une revue brève et proportionnée : aucun problème inventé pour remplir la synthèse ; si rien n'est trouvé, la revue le dit explicitement.",
+      "assertions": [
+        "Aucun finding n'est affirmé sans justification contextuelle explicite",
+        "La revue reste proportionnée à la taille du changement (pas de checklist exhaustive déroulée pour un renommage local)",
+        "Un doute non vérifiable est formulé comme une question ouverte, pas comme un bug certain"
+      ]
+    }
+  ]
+}

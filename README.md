@@ -169,6 +169,12 @@ To decide when a subagent beats a skill (and why most building blocks should sta
 
 The full theory behind these templates — agentic loops, failure modes of dynamic workflows, skill categories, step-by-step tutorials — lives in [`docs/guide-complet.md`](./docs/guide-complet.md) (currently in French; an English translation is on the roadmap if there's demand).
 
+## Quality: standard-conformant, structurally validated, eval-ready
+
+- **[Agent Skills](https://agentskills.io) open standard**: every skill follows the standard's frontmatter rules (kebab-case `name` ≤ 64 chars matching the directory, non-empty `description` ≤ 1024 chars), so the skills are portable to any tool that implements the standard — and those rules are enforced in CI, not just claimed.
+- **Structural validation in CI**: `scripts/validate-skills.sh` checks every skill and subagent on each PR (frontmatter at byte 0, Gotchas non-empty, no leftover placeholders outside `-template` skills), with a self-test suite proving the validator catches each error class.
+- **Trigger/behavior evals**: the six core skills ship with `evals/evals.json` in the [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) format — realistic prompts with observable assertions (severity labels used, verification actually run, assumptions surfaced...). Run them with the `skill-creator` plugin from the official Anthropic marketplace to benchmark the skills on your own stack. CI validates the eval files' structure; executing the evals costs API tokens and stays a manual step.
+
 ## Contributing
 
 Contributions are welcome — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the expected skill structure, naming conventions, and the non-empty-Gotchas requirement. Every PR runs the structural validator (`scripts/validate-skills.sh`) in CI; you can run it locally before pushing.

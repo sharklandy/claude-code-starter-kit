@@ -56,6 +56,21 @@
   longueur constante. Non réalisé, à décider : le « avant/après »
   bonus de la proposition.
 
+- Alignement sur le standard ouvert Agent Skills et évals de
+  déclenchement (proposition 06) :
+  - le validateur vérifie désormais les contraintes du standard
+    (agentskills.io) : `name` ≤ 64 caractères, `description` ≤ 1024
+    caractères — en plus des règles kebab-case/dossier déjà en place ;
+  - les 6 skills du noyau essentials embarquent un `evals/evals.json`
+    au format skill-creator vérifié dans la doc officielle
+    (`{skill_name, evals:[{id, prompt, expected_output, assertions}]}`) :
+    2-3 prompts réalistes par skill avec assertions observables ;
+  - la CI valide la structure de tout `evals/evals.json` (JSON valide,
+    `skill_name` = dossier, champs requis) ; l'exécution des évals
+    (consommatrice de tokens API) reste manuelle, via le plugin
+    `skill-creator` du marketplace officiel Anthropic ;
+  - section « Qualité » ajoutée aux deux README.
+
 ### Modifié
 
 - La promesse « utilisable tel quel » est désormais tenue (proposition

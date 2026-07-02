@@ -192,6 +192,12 @@ Pour savoir quand créer un subagent plutôt qu'un skill (et pourquoi la plupart
 
 La théorie complète derrière ces templates — boucles agentiques, modes de défaillance des workflows dynamiques, catégories de skills, tutoriels pas à pas — est disponible dans [`docs/guide-complet.md`](./docs/guide-complet.md).
 
+## Qualité : conforme au standard, validé structurellement, testable par évals
+
+- **Standard ouvert [Agent Skills](https://agentskills.io)** : chaque skill respecte les règles de frontmatter du standard (`name` kebab-case ≤ 64 caractères identique au dossier, `description` non vide ≤ 1024 caractères) — les skills sont donc portables vers tout outil implémentant le standard, et ces règles sont vérifiées en CI, pas seulement affirmées.
+- **Validation structurelle en CI** : `scripts/validate-skills.sh` vérifie chaque skill et subagent à chaque PR (frontmatter à l'octet 0, Gotchas non vide, aucun placeholder hors skills `-template`), avec un self-test qui prouve que le validateur attrape chaque classe d'erreur.
+- **Évals de déclenchement/comportement** : les six skills du noyau embarquent un `evals/evals.json` au format [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) — prompts réalistes et assertions observables (labels de sévérité utilisés, vérification réellement exécutée, suppositions annoncées...). Exécutez-les avec le plugin `skill-creator` du marketplace officiel Anthropic pour mesurer les skills sur votre propre stack. La CI valide la structure des fichiers d'évals ; leur exécution consomme des tokens API et reste une étape manuelle.
+
 ## Contribution
 
 Les contributions sont bienvenues — voir [`CONTRIBUTING.md`](./CONTRIBUTING.md) pour la marche à suivre (structure attendue d'un skill, convention de nommage, exigence d'une section Gotchas non vide).

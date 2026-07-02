@@ -1,0 +1,25 @@
+{
+  "skill_name": "verify-code-change",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "j'ai fini la fonctionnalité, on peut committer ?",
+      "expected_output": "Avant toute déclaration de complétion, la vérification complète du projet est exécutée (build, tests, lint avec les commandes réelles du projet) et le résultat effectif est rapporté — le commit n'est proposé qu'après.",
+      "assertions": [
+        "La vérification (build/tests/lint) est réellement exécutée avant de répondre sur le commit",
+        "Les commandes utilisées sont celles du projet (lues dans sa configuration ou sa CI), pas devinées par convention",
+        "La sortie réelle des commandes est citée dans la réponse, succès comme échec",
+        "Aucune déclaration de type « c'est terminé » n'apparaît avant les résultats de vérification"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "le build passe, donc c'est bon, je merge",
+      "expected_output": "Un rappel appliqué (pas seulement énoncé) que le build seul ne suffit pas : les tests sont lancés avant de valider, en particulier sur un langage dynamique.",
+      "assertions": [
+        "Les tests sont exécutés même si le build passe",
+        "La réponse n'entérine pas le merge avant d'avoir des résultats de tests réels"
+      ]
+    }
+  ]
+}

@@ -76,10 +76,14 @@ while IFS= read -r -d '' skill_md; do
   if [[ -n "$name" ]]; then
     is_kebab "$name" || fail "$rel : 'name: $name' n'est pas en kebab-case"
     [[ "$name" == "$dir_name" ]] || fail "$rel : 'name: $name' diffère du nom du dossier '$dir_name'"
+    # Standard Agent Skills (agentskills.io) : name ≤ 64 caractères.
+    [[ ${#name} -le 64 ]] || fail "$rel : 'name' dépasse 64 caractères (standard Agent Skills)"
   fi
 
   desc="$(fm_field_value "$skill_md" description)"
   [[ -n "$desc" ]] || fail "$rel : champ 'description' absent ou vide (c'est lui qui pilote le déclenchement)"
+  # Standard Agent Skills (agentskills.io) : description ≤ 1024 caractères.
+  [[ ${#desc} -le 1024 ]] || fail "$rel : 'description' dépasse 1024 caractères (standard Agent Skills)"
 
   gotchas_nonempty "$skill_md" || fail "$rel : section '## Gotchas' absente ou vide (exigence CONTRIBUTING.md)"
 
@@ -113,6 +117,31 @@ if [[ -d "$ROOT/.claude/agents" ]]; then
   done < <(find "$ROOT/.claude/agents" -mindepth 1 -maxdepth 1 -type f -name "*.md" -print0 | sort -z)
 fi
 echo "  ${AGENT_COUNT} subagents analysés."
+
+# --- Évals (format skill-creator, agentskills.io) ----------------------
+
+EVALS_COUNT=0
+if command -v python3 >/dev/null 2>&1; then
+  echo "Validation des fichiers d'évals (skills/**/evals/evals.json) :"
+  while IFS= read -r -d '' evals_json; do
+    EVALS_COUNT=$((EVALS_COUNT + 1))
+    rel="${evals_json#"$ROOT"/}"
+    skill_dir="$(basename "$(dirname "$(dirname "$evals_json")")")"
+    if ! err="$(python3 - "$evals_json" "$skill_dir" <<'PYEOF' 2>&1
+import json, sys
+data = json.load(open(sys.argv[1]))
+assert data["skill_name"] == sys.argv[2], f"skill_name '{data['skill_name']}' != dossier '{sys.argv[2]}'"
+assert isinstance(data["evals"], list) and data["evals"], "liste 'evals' vide"
+for e in data["evals"]:
+    for k in ("id", "prompt", "expected_output"):
+        assert k in e, f"champ '{k}' manquant dans l'eval {e.get('id','?')}"
+PYEOF
+)"; then
+      fail "$rel : ${err##*AssertionError: }"
+    fi
+  done < <(find "$ROOT/skills" -mindepth 4 -maxdepth 4 -type f -name "evals.json" -path "*/evals/*" -print0 | sort -z)
+  echo "  ${EVALS_COUNT} fichiers d'évals analysés."
+fi
 
 # --- Verdict -----------------------------------------------------------
 
