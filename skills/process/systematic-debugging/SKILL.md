@@ -46,6 +46,8 @@ description: >
   correctif proposé ne change rien à la reproduction de l'étape 1,
   revenir à l'étape 2 plutôt que d'empiler un second correctif par
   -dessus le premier.
-- <TODO: si votre projet a des outils de debug spécifiques (profiler,
-  dashboard de logs, réplica de prod en lecture seule...), listez-les
-  ici pour que l'agent les utilise en priorité.>
+- Les outils de debug propres au projet (profiler, dashboard de logs,
+  réplica de prod en lecture seule...) déjà utilisés avec succès sont
+  consignés par le subagent `bug-investigator` dans sa mémoire de
+  projet (`.claude/agent-memory/bug-investigator/`) — la consulter
+  avant d'improviser une instrumentation à la main.

@@ -41,6 +41,8 @@ description: >
   assertion donne une fausse impression de couverture ("le fichier de
   test existe donc c'est testé") — le cas trivial de l'étape 3 doit
   contenir une assertion réelle, même minimale.
-- <TODO: si votre projet utilise un générateur de scaffolding existant
-  (CLI interne, générateur de framework...), documentez-le ici pour que
-  l'agent l'utilise plutôt que de recréer la structure à la main.>
+- Avant de créer la structure à la main, vérifier si le projet fournit
+  déjà un générateur (script `generate`/`scaffold` dans le manifeste,
+  CLI du framework, dossier de templates dans le repo) — l'utiliser
+  produit une structure conforme aux conventions locales, là où une
+  création manuelle les réinvente.

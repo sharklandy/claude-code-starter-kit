@@ -45,6 +45,8 @@ activement des failles plutôt que de simplement confirmer que le code
 - Un diff volumineux (plusieurs centaines de lignes) fait souvent
   décrocher l'agent adversarial avant la fin : découper la revue par
   fichier ou par module plutôt que de tout soumettre d'un bloc.
-- <TODO: si votre projet a des zones à risque connu (auth, paiement,
-  migrations de données...), listez-les ici pour que l'agent
-  adversarial leur porte une attention renforcée systématiquement.>
+- Les zones à risque connu (auth, paiement, migrations de données...)
+  s'accumulent revue après revue dans la mémoire de projet du subagent
+  `code-reviewer` (`.claude/agent-memory/code-reviewer/`) : la
+  consulter au démarrage quand elle existe, plutôt que de redécouvrir
+  les mêmes zones à chaque session.

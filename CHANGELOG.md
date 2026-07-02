@@ -44,6 +44,20 @@
 - Reste à faire côté GitHub (actions sur le remote, hors périmètre de
   cette branche) : description du dépôt, topics, releases taguées.
 
+### Modifié
+
+- La promesse « utilisable tel quel » est désormais tenue (proposition
+  04) : plus aucun placeholder `<TODO:` hors des 4 skills `-template`.
+  Les 16 occurrences des 15 skills concernés sont réécrites en gotchas
+  génériques réellement vrais partout : renvoi vers la mémoire de
+  projet des subagents (`.claude/agent-memory/`) pour les zones à
+  risque, outils de debug et commandes de CI ; détection dans le repo
+  (template de PR, config de release automatique, générateur de
+  scaffolding, convention de commit lue dans `git log`) pour le reste.
+  Le suffixe `-template` redevient le seul marqueur « nécessite
+  adaptation », et la règle est vérifiée par la CI. La validation
+  passe : 21 skills, 4 subagents, 0 erreur.
+
 ## [1.4.0] - 2026-07-01
 
 ### Ajouté

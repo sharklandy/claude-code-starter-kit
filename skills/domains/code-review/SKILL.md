@@ -84,6 +84,8 @@ risque de sécurité" sans expliquer pourquoi le contexte le confirme).
   diff touche clairement une requête base de données ou une entrée
   utilisateur est incomplète — vérifier systématiquement les conditions
   de renvoi de la phase 3 avant de conclure à une synthèse.
-- <TODO: si votre projet a des zones jugées critiques par l'équipe
-  (auth, paiement, migrations...), listez-les ici pour qu'elles reçoivent
-  systématiquement une revue de sévérité renforcée.>
+- Les zones critiques du projet (auth, paiement, migrations...) n'ont
+  pas à être listées ici à la main : le subagent `code-reviewer` les
+  apprend au fil des revues et les consigne dans sa mémoire de projet
+  (`.claude/agent-memory/code-reviewer/`) — la consulter quand elle
+  existe, et appliquer une sévérité renforcée à toute zone qui y figure.

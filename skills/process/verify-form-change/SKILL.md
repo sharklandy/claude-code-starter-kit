@@ -32,6 +32,8 @@ Si une étape échoue, corriger le problème et reprendre depuis l'étape 1
   état, pas un délai fixe).
 - Le champ email accepte à tort les adresses sans TLD en dev — vérifier
   aussi ce cas si le formulaire concerne un email.
-- <TODO: ajoutez ici les pièges spécifiques à votre propre stack de
-  formulaires (librairie de validation utilisée, comportement de votre
-  environnement de dev, etc.).>
+- Les pièges spécifiques à la stack de formulaires (librairie de
+  validation, comportement de l'environnement de dev...) s'accumulent
+  dans cette section au fil des sessions : ajouter une ligne à chaque
+  cas raté plutôt que de corriger uniquement le cas isolé (voir
+  `docs/guide-complet.md`, Partie 1.6).

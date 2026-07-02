@@ -42,6 +42,8 @@ description: >
 - Des commits de type `chore(release): ...` ou de bump de version
   automatique ne doivent pas apparaître comme une entrée de changelog à
   part entière — les exclure explicitement.
-- <TODO: si votre projet suit un format de changelog différent de "Keep
-  a Changelog" (ex. généré automatiquement par un outil comme
-  semantic-release), documentez le format exact attendu ici.>
+- Avant d'écrire quoi que ce soit, vérifier si le changelog est généré
+  automatiquement par un outil de release (config `.releaserc`,
+  `release-please-config.json`, section `semantic-release` d'un
+  manifeste...) : dans ce cas ne jamais l'éditer à la main — la
+  modification serait écrasée à la release suivante.

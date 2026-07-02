@@ -42,5 +42,7 @@ description: >
   changer de version en même temps que la dépendance directe mise à
   jour — vérifier le diff complet du lockfile, pas uniquement la ligne
   du package demandé explicitement.
-- <TODO: si votre projet a un processus d'approbation de dépendances
-  (revue sécurité, liste blanche de licences...), documentez-le ici.>
+- Un processus d'approbation de dépendances (revue sécurité, liste
+  blanche de licences...) ne se déduit pas du code : vérifier
+  `CONTRIBUTING.md` et la doc interne du projet, et en cas de doute
+  demander à l'utilisateur plutôt que de supposer qu'il n'y en a pas.
