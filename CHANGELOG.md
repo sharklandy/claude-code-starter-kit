@@ -22,6 +22,18 @@
 - **Important pour les mainteneurs** : le champ `version` des deux
   entrées de `marketplace.json` doit être bumpé à chaque release, sinon
   les utilisateurs ne reçoivent pas la mise à jour.
+- CI de validation des skills (proposition 02) :
+  `.github/workflows/validate.yml` + `scripts/validate-skills.sh`
+  (exécutable en local). Vérifie sur chaque PR : frontmatter YAML à
+  l'octet 0 de chaque SKILL.md et subagent (la classe de bug corrigée
+  en 2a7e1c8), `name` kebab-case identique au dossier/fichier,
+  `description` présente, section `## Gotchas` non vide, aucun
+  `<TODO:` hors skills `-template`, mode `100755` d'`install.sh` et
+  smoke test d'installation complète (`reference/` inclus).
+- `scripts/validate-skills-selftest.sh` : 8 fixtures prouvant que le
+  validateur attrape chaque classe d'erreur — dont la reconstruction
+  exacte du bug 2a7e1c8 (commentaire HTML avant le frontmatter).
+- Badge « validate » dans le README.
 
 ## [1.4.0] - 2026-07-01
 

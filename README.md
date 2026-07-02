@@ -1,6 +1,7 @@
 # Claude Code Starter Kit — Boucles, Workflows & Skills
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Skills validés](https://github.com/sharklandy/claude-code-starter-kit/actions/workflows/validate.yml/badge.svg)
 
 ## Quickstart
 
