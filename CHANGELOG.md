@@ -34,6 +34,15 @@
   validateur attrape chaque classe d'erreur — dont la reconstruction
   exacte du bug 2a7e1c8 (commentaire HTML avant le frontmatter).
 - Badge « validate » dans le README.
+- README bilingue (proposition 03) : `README.md` devient la version
+  anglaise (rédigée nativement, porte d'entrée du dépôt) ; le contenu
+  français vit désormais dans `README.fr.md`, avec lien croisé entre
+  les deux. Le guide théorique et les corps de skills restent en
+  français — assumé et annoncé dans la version anglaise. Les
+  arborescences des deux README intègrent `.claude-plugin/`, `scripts/`
+  et la CI.
+- Reste à faire côté GitHub (actions sur le remote, hors périmètre de
+  cette branche) : description du dépôt, topics, releases taguées.
 
 ## [1.4.0] - 2026-07-01
 

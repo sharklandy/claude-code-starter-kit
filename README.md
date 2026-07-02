@@ -1,181 +1,168 @@
-# Claude Code Starter Kit — Boucles, Workflows & Skills
+# Claude Code Starter Kit — Loops, Workflows & Skills
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
-![Skills validés](https://github.com/sharklandy/claude-code-starter-kit/actions/workflows/validate.yml/badge.svg)
+![Skills validated](https://github.com/sharklandy/claude-code-starter-kit/actions/workflows/validate.yml/badge.svg)
+
+🇫🇷 [Version française](./README.fr.md) — the full theory guide (`docs/guide-complet.md`) and the skill bodies are currently written in French. Skill `description` fields — the part that drives automatic triggering — are in English, so the skills work the same regardless of your language.
+
+A library of ready-to-use skills, subagents, and prompt templates for `/goal`, `/loop`, `/schedule` and dynamic workflows — get productive with Claude Code in minutes instead of iterating on prompts for weeks.
 
 ## Quickstart
 
-**Voie recommandée — plugin Claude Code** (une commande, mises à jour intégrées) :
+**Recommended — install as a Claude Code plugin** (one command, built-in updates):
 
 ```
 /plugin marketplace add sharklandy/claude-code-starter-kit
 /plugin install starter-kit-essentials@claude-code-starter-kit
 ```
 
-`starter-kit-essentials` installe le noyau : 6 skills génériques développeur + les 4 subagents. Pour tout le kit (21 skills, templates vague 1 inclus) :
+`starter-kit-essentials` installs the core: 6 general-purpose developer skills plus the 4 subagents. For the whole kit (all 21 skills, wave-1 templates included):
 
 ```
 /plugin install starter-kit-full@claude-code-starter-kit
 ```
 
-Les skills d'un plugin sont préfixés par son nom (ex. `/starter-kit-essentials:code-review`) — c'est ce qui garantit zéro collision avec vos skills existants. Pour recevoir les mises à jour : `/plugin marketplace update claude-code-starter-kit`.
+Plugin skills are namespaced by plugin name (e.g. `/starter-kit-essentials:code-review`), which guarantees they never collide with skills you already have. To get updates: `/plugin marketplace update claude-code-starter-kit`.
 
-**Voie alternative — copie physique** (fichiers modifiables localement, noms courts sans préfixe) :
+**Alternative — physical copy** (editable files, short un-namespaced skill names):
 
 ```bash
 git clone https://github.com/sharklandy/claude-code-starter-kit.git
 cd claude-code-starter-kit
 chmod +x install.sh
-./install.sh --global   # ou --local /chemin/vers/votre/projet
+./install.sh --global   # or --local /path/to/your/project
 ```
 
-Dans les deux cas, collez ensuite le [prompt d'onboarding](./docs/onboarding-prompt.md) dans Claude Code pour que les skills s'adaptent automatiquement à votre projet.
+Either way, paste the [onboarding prompt](./docs/onboarding-prompt.md) into Claude Code afterwards so the skills adapt themselves to your project.
 
-Une bibliothèque de skills prêts à l'emploi et de templates de prompts `/goal`, `/loop`, `/schedule` et workflows dynamiques pour démarrer avec Claude Code en quelques minutes.
+## Why this kit
 
-## Pourquoi ce repo
+Writing good skills and good loop/workflow prompts takes time and many iterations. This repo collects generic, already-structured templates — trigger-oriented descriptions, a Gotchas section, progressive disclosure — so you adapt them to your stack instead of starting from a blank page. A full theory guide explains the "why" behind every pattern.
 
-Construire de bons skills et de bons prompts de boucle/workflow prend du temps et beaucoup d'itérations. Ce repo rassemble des templates génériques déjà structurés — description orientée déclenchement, section Gotchas, divulgation progressive — pour que vous n'ayez qu'à les adapter à votre stack plutôt que de partir d'une page blanche. Il s'accompagne d'un guide théorique complet si vous voulez comprendre le "pourquoi" derrière chaque pattern.
+The kit distinguishes two waves of skills:
 
-Le repo distingue deux vagues de skills :
+- **Wave 1 — templates derived from business use cases** (`-template` suffix): they illustrate a pattern through a concrete scenario (checkout flows, language migration, product-feedback triage) and need adapting to your own domain before use.
+- **Wave 2 — general-purpose developer skills**: usable as-is on any project, whatever the stack, no prior reading required.
 
-- **Vague 1 — templates issus de cas d'usage métier** (`-template`) : illustrent un pattern à partir d'un scénario concret (checkout, migration de langage, triage de feedback produit) et nécessitent une adaptation à votre propre domaine avant usage.
-- **Vague 2 — skills génériques développeur** : utilisables tels quels sur n'importe quel projet, quelle que soit la stack, sans connaître le guide théorique au préalable. Ils complètent le guide théorique plutôt que d'en être extraits directement.
+Skills live in two categories under `skills/`: `process/` for cross-cutting skills (independent of any technical domain) and `domains/` for domain skills (code review, test strategy...). A large domain skill follows **progressive disclosure** (see `docs/guide-complet.md`, Part 3.3): a short `SKILL.md` core that is always loaded, and a `reference/` subfolder with the details, which Claude only reads when the context calls for it — see `skills/domains/code-review/` as the reference example.
 
-Les skills sont rangés en deux catégories dans `skills/` : `process/` pour les skills transverses (indépendants d'un domaine technique précis) et `domains/` pour les skills liés à un domaine (revue de code, stratégie de test...). Un skill de domaine volumineux suit le principe de **divulgation progressive** (voir `docs/guide-complet.md`, Partie 3.3) : un noyau `SKILL.md` court, toujours chargé, et un sous-dossier `reference/` avec le détail, que Claude ne consulte que lorsque le contexte le justifie — voir `skills/domains/code-review/` comme exemple.
-
-## Structure du repo
+## Repository layout
 
 ```
 claude-code-starter-kit/
-├── README.md                     # ce fichier
-├── LICENSE                       # licence MIT
-├── CONTRIBUTING.md               # comment contribuer un skill/prompt
-├── CHANGELOG.md                  # historique des versions
-├── install.sh                    # installe les skills en local ou globalement
+├── README.md                     # this file
+├── README.fr.md                  # French version (reference for docs)
+├── LICENSE                       # MIT license
+├── CONTRIBUTING.md               # how to contribute a skill/prompt
+├── CHANGELOG.md                  # version history
+├── install.sh                    # installs skills locally or globally
+├── .claude-plugin/
+│   └── marketplace.json          # Claude Code plugin marketplace (one-command install)
+├── scripts/
+│   ├── validate-skills.sh        # structural validator for skills/subagents (CI + local)
+│   └── validate-skills-selftest.sh
 ├── docs/
-│   ├── guide-complet.md          # théorie complète : boucles, workflows, skills
-│   ├── glossaire.md              # extrait rapide : définitions
-│   ├── commandes-utiles.md       # extrait rapide : tableau des commandes
-│   └── subagents-vs-skills.md    # quand créer un subagent plutôt qu'un skill
+│   ├── guide-complet.md          # full theory: loops, workflows, skills (French)
+│   ├── glossaire.md              # quick glossary
+│   ├── commandes-utiles.md       # command cheat-sheet
+│   └── subagents-vs-skills.md    # when a subagent beats a skill
 ├── .claude/
-│   └── agents/                   # subagents prêts à l'emploi (installés par install.sh)
-│       ├── code-reviewer.md      # revue adversariale à contexte frais
-│       ├── test-runner.md        # build/tests/lint isolés, ne rapporte que les échecs
-│       ├── dependency-scout.md   # rapport d'impact avant un bump de dépendance
-│       └── bug-investigator.md   # reproduction + diagnostic de cause racine
-├── skills/                       # skills prêts à l'emploi (SKILL.md + Gotchas)
-│   ├── process/                  # skills transverses, indépendants d'un domaine technique
-│   │   ├── verify-frontend-change/            # vague 1
-│   │   ├── verify-form-change/                # vague 1
-│   │   ├── checkout-verifier-template/        # vague 1
-│   │   ├── bug-triage-runbook-template/       # vague 1
-│   │   ├── python-to-ts-migration-template/   # vague 1
-│   │   ├── library-reference-template/        # vague 1
-│   │   ├── verify-code-change/                # vague 2
-│   │   ├── adversarial-code-review/           # vague 2
-│   │   ├── commit-message-quality/            # vague 2
-│   │   ├── pr-description-generator/          # vague 2
-│   │   ├── systematic-debugging/              # vague 2
-│   │   ├── dependency-update-check/           # vague 2
-│   │   ├── new-feature-scaffold/              # vague 2
-│   │   ├── changelog-from-commits/            # vague 2
-│   │   ├── safe-refactor/                     # vague 2
-│   │   ├── choose-your-loop/                  # vague 2 — à utiliser en amont de goals/, workflows/, routines/
-│   │   ├── readme-generator/                  # vague 2
-│   │   ├── env-doctor/                        # vague 2
-│   │   └── avoid-agentic-pitfalls/            # vague 2
-│   └── domains/                  # skills de domaine, à divulgation progressive si volumineux
+│   └── agents/                   # ready-to-use subagents (installed by install.sh)
+│       ├── code-reviewer.md      # fresh-context adversarial review
+│       ├── test-runner.md        # isolated build/test/lint, reports failures only
+│       ├── dependency-scout.md   # impact report before a dependency bump
+│       └── bug-investigator.md   # reproduction + root-cause diagnosis
+├── skills/
+│   ├── process/                  # cross-cutting skills (19)
+│   └── domains/                  # domain skills, progressive disclosure when large
 │       ├── code-review/
-│       │   ├── SKILL.md          # noyau court, toujours chargé
-│       │   └── reference/        # détail chargé par Claude à la demande
+│       │   ├── SKILL.md          # short core, always loaded
+│       │   └── reference/        # detail loaded on demand
 │       │       ├── security.md
 │       │       ├── performance.md
 │       │       └── database-queries.md
 │       └── test-strategy/
 ├── goals/
-│   └── goal-templates.md         # prompts /goal prêts à copier-coller
+│   └── goal-templates.md         # copy-paste-ready /goal prompts
 ├── workflows/
-│   └── workflow-prompts.md       # un prompt par pattern de composition
+│   └── workflow-prompts.md       # one prompt per composition pattern
 ├── routines/
-│   └── routine-templates.md      # combinaisons /schedule + /goal + workflow
+│   └── routine-templates.md      # full /schedule + /goal + workflow combos
 └── .github/
+    ├── workflows/
+    │   └── validate.yml          # CI: skill validation + install.sh smoke test
     ├── ISSUE_TEMPLATE/
-    │   ├── new-skill.md
-    │   └── bug-report.md
     └── PULL_REQUEST_TEMPLATE.md
 ```
 
-## Installation
+## Installation with install.sh
 
-Le script `install.sh` détecte chaque skill sous `skills/process/` et `skills/domains/` (y compris les sous-dossiers `reference/` d'un skill à divulgation progressive) et l'installe à plat vers l'emplacement de votre choix. Il installe aussi les subagents de `.claude/agents/` vers `~/.claude/agents/` (`--global`) ou `<projet>/.claude/agents/` (`--local`).
+`install.sh` detects every skill under `skills/process/` and `skills/domains/` (including the `reference/` subfolders of progressive-disclosure skills) and installs each one flat at the destination of your choice. It also installs the subagents from `.claude/agents/`.
 
-**Installation globale** (disponible dans tous vos projets, usage personnel) :
+**Global install** (available in all your projects, personal use):
 
 ```bash
 ./install.sh --global
 ```
 
-Installe dans `~/.claude/skills/`.
+Installs into `~/.claude/skills/` and `~/.claude/agents/`.
 
-**Installation locale** (partagée avec toute personne qui clone le dépôt du projet ciblé) :
+**Local install** (shared with anyone who clones the target project):
 
 ```bash
-./install.sh --local /chemin/vers/votre/projet
+./install.sh --local /path/to/your/project
 ```
 
-Installe dans `/chemin/vers/votre/projet/.claude/skills/`.
+Installs into `/path/to/your/project/.claude/skills/` and `.claude/agents/`.
 
-Dans les deux cas, si un skill du même nom existe déjà à la destination, le script demande confirmation avant de l'écraser, puis affiche un résumé des skills installés et du chemin de destination.
+In both cases, if a skill with the same name already exists at the destination, the script asks for confirmation before overwriting, then prints a summary of what was installed and where.
 
-## Démarrer sur un projet
+## Getting started on a project
 
-Le parcours complet tient en 4 étapes : cloner le repo → lancer `install.sh` → coller le [prompt d'onboarding](./docs/onboarding-prompt.md) dans Claude Code → suivre les instructions que Claude vous donne.
+The whole journey is four steps: install (plugin or `install.sh`) → paste the [onboarding prompt](./docs/onboarding-prompt.md) into Claude Code → follow the instructions Claude gives you.
 
-Ce prompt analyse automatiquement votre situation et se comporte différemment selon le cas :
+The onboarding prompt analyzes your situation and behaves accordingly:
 
-- **Projet existant** : Claude analyse votre code, vos dépendances, vos commandes de build/test/lint et votre historique git, puis remplit lui-même les placeholders `<TODO: ...>` des skills installés qu'il peut déduire avec confiance — le reste est signalé explicitement comme "à compléter manuellement".
-- **Projet vierge** : Claude ne devine rien à partir de code qui n'existe pas. Il vous pose quelques questions de cadrage (stack envisagée, type d'application, convention de commit...), puis classe les skills installés en "actifs dès maintenant" et "en attente" du premier code réel.
+- **Existing project**: Claude analyzes your code, dependencies, build/test/lint commands and git history, then fills in the `<TODO: ...>` placeholders of installed skills it can deduce with confidence — everything else is explicitly flagged as "fill in manually".
+- **Blank project**: Claude guesses nothing from code that doesn't exist. It asks a few scoping questions (intended stack, application type, commit convention...), then classifies installed skills as "active now" vs "waiting" for the first real code.
 
-Voir [`docs/onboarding-prompt.md`](./docs/onboarding-prompt.md) pour le détail des deux cas et le prompt complet.
+If you're unsure which mechanism to pick (`/goal`, dynamic workflow, or a routine), use the `choose-your-loop` skill **before** grabbing anything from `goals/`, `workflows/` or `routines/`: it frames the task, detects a success criterion that's too vague, and validates (or corrects) the choice before writing the final prompt.
 
-Si vous n'êtes pas sûr du mécanisme à choisir (`/goal`, workflow dynamique, ou routine), utilisez le skill `choose-your-loop` **avant** de piocher dans `goals/`, `workflows/` ou `routines/` : il cadre la tâche, détecte un critère de succès trop flou, et valide (ou corrige) le choix avant de rédiger le prompt final.
+## Adapting the templates to your stack
 
-## Comment adapter les templates à votre stack
+The [onboarding prompt](./docs/onboarding-prompt.md) automates the placeholder filling. If you prefer doing it by hand:
 
-Le [prompt d'onboarding](./docs/onboarding-prompt.md) ci-dessus automatise le remplissage des placeholders `<TODO: description>` présents dans chaque `SKILL.md`. Si vous préférez les adapter manuellement plutôt que de passer par ce prompt :
+1. Keep the existing structure — in particular, never empty the `## Gotchas` section: it's the highest-signal content of a skill (see `docs/guide-complet.md`, Part 3.3).
+2. Test that the skill actually triggers in a real Claude Code session: if it doesn't fire spontaneously on a relevant task, the frontmatter `description` probably isn't explicit enough about the keywords that should activate it.
+3. Grow the Gotchas section over time, with every new pitfall you hit, instead of only fixing the isolated case.
 
-1. Gardez la structure existante — en particulier ne videz jamais la section `## Gotchas` : c'est le contenu au plus fort signal d'un skill (voir `docs/guide-complet.md`, Partie 3.3).
-2. Testez le déclenchement du skill dans une session Claude Code réelle : s'il ne se déclenche pas spontanément sur une tâche pertinente, la `description` du frontmatter n'est probablement pas assez explicite sur les mots-clés qui doivent l'activer.
-3. Enrichissez la section Gotchas au fil du temps, à chaque nouveau piège rencontré, plutôt que de corriger uniquement le cas isolé.
+## Subagents: tasks that deserve their own context
 
-## Subagents : les tâches qui méritent leur propre contexte
+Beyond skills, the kit ships four ready-to-use **subagents** (`.claude/agents/`, installed by both the plugin and `install.sh`). A subagent runs in a separate context window, with its own tool restrictions, and returns only its summary — where a skill guides the main conversation:
 
-En plus des skills, le repo fournit quatre **subagents** prêts à l'emploi (`.claude/agents/`, installés par `install.sh`). Un subagent tourne dans une fenêtre de contexte séparée, avec ses propres restrictions d'outils, et ne renvoie que sa synthèse — là où un skill guide la conversation principale :
+- **`code-reviewer`** — fresh-context adversarial review: the agent hasn't seen how the code was written, cannot edit it, and preloads the `code-review` domain skill as its review framework.
+- **`test-runner`** — runs build/tests/lint (detected from the project's CI) and reports only the failures; verbose test output never pollutes your conversation.
+- **`dependency-scout`** — before a dependency bump, absorbs changelogs and usage searches, and returns an impact report; it never applies the update itself.
+- **`bug-investigator`** — reproduces, bisects, and confirms a bug's root cause, then returns a diagnosis with evidence; the fix is decided in the main conversation.
 
-- **`code-reviewer`** — revue adversariale à contexte frais : l'agent n'a pas vu comment le code a été écrit, ne peut pas l'éditer, et précharge le skill de domaine `code-review` comme grille de lecture.
-- **`test-runner`** — lance build/tests/lint (détectés depuis la CI du projet) et ne rapporte que les échecs ; la sortie verbeuse des tests ne pollue jamais votre conversation.
-- **`dependency-scout`** — avant un bump de dépendance, absorbe changelogs et recherche d'usages, et renvoie un rapport d'impact ; il n'applique jamais la mise à jour lui-même.
-- **`bug-investigator`** — reproduit, bissecte et confirme la cause racine d'un bug, puis rend un diagnostic avec preuves ; le correctif se décide dans la conversation principale.
+Three of them have **persistent per-project memory** (`memory: project`): risk areas, confirmed CI commands, flaky tests, bug patterns — knowledge that accumulates across sessions and is shared through git instead of being rediscovered every time.
 
-Trois d'entre eux ont une **mémoire persistante par projet** (`memory: project`) : zones à risque, commandes de CI confirmées, tests flaky, patterns de bugs — des connaissances qui s'accumulent d'une session à l'autre et se partagent via git, au lieu d'être redécouvertes à chaque fois.
+To decide when a subagent beats a skill (and why most building blocks should stay skills), see [`docs/subagents-vs-skills.md`](./docs/subagents-vs-skills.md).
 
-Pour savoir quand créer un subagent plutôt qu'un skill (et pourquoi la plupart des briques doivent rester des skills), voir [`docs/subagents-vs-skills.md`](./docs/subagents-vs-skills.md).
+## Using the /goal, /loop, /schedule and workflow prompts
 
-## Utiliser les prompts /goal, /loop, /schedule et workflows
+- [`goals/goal-templates.md`](./goals/goal-templates.md) — ready-to-use `/goal` prompts (tests, performance, migration, security...), each with an explicit retry cap.
+- [`workflows/workflow-prompts.md`](./workflows/workflow-prompts.md) — one prompt per composition pattern (classify-and-act, split-and-synthesize, parallel research, adversarial review, tournament, loop-until-done).
+- [`routines/routine-templates.md`](./routines/routine-templates.md) — complete `/schedule` + `/goal` + workflow combinations for fully autonomous flows.
 
-- [`goals/goal-templates.md`](./goals/goal-templates.md) — prompts `/goal` prêts à l'emploi (tests, performance, migration, sécurité...), avec plafond de tentatives explicite.
-- [`workflows/workflow-prompts.md`](./workflows/workflow-prompts.md) — un prompt par pattern de composition (classify-and-act, découpage-synthèse, recherche parallèle, revue adversariale, tournoi, loop-until-done).
-- [`routines/routine-templates.md`](./routines/routine-templates.md) — combinaisons complètes `/schedule` + `/goal` + workflow pour des flux entièrement autonomes.
+## Going further
 
-## Pour aller plus loin
+The full theory behind these templates — agentic loops, failure modes of dynamic workflows, skill categories, step-by-step tutorials — lives in [`docs/guide-complet.md`](./docs/guide-complet.md) (currently in French; an English translation is on the roadmap if there's demand).
 
-La théorie complète derrière ces templates — boucles agentiques, modes de défaillance des workflows dynamiques, catégories de skills, tutoriels pas à pas — est disponible dans [`docs/guide-complet.md`](./docs/guide-complet.md).
+## Contributing
 
-## Contribution
+Contributions are welcome — see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the expected skill structure, naming conventions, and the non-empty-Gotchas requirement. Every PR runs the structural validator (`scripts/validate-skills.sh`) in CI; you can run it locally before pushing.
 
-Les contributions sont bienvenues — voir [`CONTRIBUTING.md`](./CONTRIBUTING.md) pour la marche à suivre (structure attendue d'un skill, convention de nommage, exigence d'une section Gotchas non vide).
+## License
 
-## Licence
-
-Ce projet est distribué sous licence [MIT](./LICENSE).
+Distributed under the [MIT](./LICENSE) license.
