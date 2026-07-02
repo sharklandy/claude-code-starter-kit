@@ -1,0 +1,25 @@
+{
+  "skill_name": "test-strategy",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "je viens d'écrire une fonction de calcul de prix avec remises et TVA, qu'est-ce que je devrais tester ?",
+      "expected_output": "Un plan de test priorisé qui distingue les niveaux (unitaire vs intégration), identifie les cas limites du calcul (remise à 0, remise > prix, arrondis) et explique pourquoi chaque test est au niveau proposé.",
+      "assertions": [
+        "Le plan distingue explicitement ce qui relève du test unitaire et ce qui relève de l'intégration",
+        "Au moins trois cas limites concrets du calcul sont identifiés (zéro, valeurs négatives, arrondis...)",
+        "Chaque test proposé est justifié par le comportement qu'il protège, pas par un objectif de couverture chiffré"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "nos tests cassent à chaque refactor alors que le comportement ne change pas, comment améliorer notre stratégie ?",
+      "expected_output": "Un diagnostic des patterns de tests fragiles (tests couplés à l'implémentation, assertions sur des détails internes) avec des recommandations pour tester le comportement observable plutôt que la structure interne.",
+      "assertions": [
+        "La réponse identifie le couplage à l'implémentation comme cause de fragilité",
+        "Au moins un exemple concret de reformulation d'un test fragile en test de comportement est donné",
+        "La réponse ne propose pas de supprimer les tests ni de baisser la couverture comme solution"
+      ]
+    }
+  ]
+}

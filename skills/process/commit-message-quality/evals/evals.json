@@ -1,0 +1,25 @@
+{
+  "skill_name": "commit-message-quality",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "commit tout ça",
+      "expected_output": "Si le staged mélange plusieurs préoccupations indépendantes, un découpage en plusieurs commits est proposé ; le message suit la convention détectée dans le git log du projet et décrit le pourquoi, pas une paraphrase du diff.",
+      "assertions": [
+        "Le contenu staged est inspecté (git diff --staged) avant de rédiger le message",
+        "Un mélange de préoccupations indépendantes déclenche une proposition de découpage en plusieurs commits",
+        "La convention de message est détectée depuis l'historique git réel, pas supposée",
+        "Le résumé décrit l'effet observable ou le pourquoi du changement, pas « fix bug » ou une paraphrase du diff"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "écris le message de commit : j'ai renommé la fonction et corrigé le crash au démarrage",
+      "expected_output": "Deux commits proposés (le renommage et le correctif sont des idées logiques distinctes), le correctif étant typé fix et le renommage refactor.",
+      "assertions": [
+        "Les deux changements sont identifiés comme des commits séparés",
+        "Le type fix est réservé au crash corrigé, le renommage n'est pas typé fix"
+      ]
+    }
+  ]
+}

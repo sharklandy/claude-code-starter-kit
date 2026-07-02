@@ -61,7 +61,8 @@ de configuration pertinents avant de proposer un diagnostic.
   présentes dans `.env.example` (ajoutées manuellement par un
   développeur) — ne pas les signaler comme des erreurs, seulement
   signaler les variables **manquantes** par rapport à l'exemple.
-- <TODO: si votre projet a des dépendances système non gérées par le
-  gestionnaire de paquets du langage (base de données locale, outil
-  CLI externe...), documentez-les ici pour que le diagnostic les
-  couvre aussi.>
+- Les dépendances système hors gestionnaire de paquets du langage
+  (base de données locale, CLI externe...) se détectent dans le README,
+  `docker-compose.yml`, un `Dockerfile` ou les fichiers de CI — les
+  lire avant de conclure qu'un environnement est complet, plutôt que de
+  s'arrêter au manifeste du langage.

@@ -14,9 +14,10 @@ description: >
    préoccupations indépendantes (ex. un correctif de bug et un
    renommage sans rapport), proposer de découper en plusieurs commits
    plutôt que de tout committer d'un bloc.
-2. Rédiger le message selon une convention structurée
-   (<TODO: adaptez si votre projet suit une convention différente —
-   par défaut, ce skill utilise Conventional Commits> :
+2. Rédiger le message selon la convention déjà en usage dans le projet
+   — la détecter dans les 30-50 derniers commits de `git log` plutôt
+   que de la supposer. À défaut de convention détectable, utiliser
+   Conventional Commits :
    `<type>(<scope optionnel>): <résumé au présent, impératif, < 72 car.>`
    Types courants : `feat`, `fix`, `refactor`, `test`, `docs`, `chore`.
 3. Le résumé doit décrire le **pourquoi** ou l'effet observable du
@@ -41,5 +42,7 @@ description: >
   en réalité des `refactor` sans changement de comportement observable
   — vérifier qu'un `fix` corrige bien un comportement incorrect
   constaté, pas juste "amélioré".
-- <TODO: si votre projet exige un ticket/numéro d'issue dans le message
-  (ex. `JIRA-123: ...`), documentez le format exact ici.>
+- Si les messages récents du `git log` contiennent un identifiant de
+  ticket (ex. `JIRA-123: ...`), reproduire exactement ce format — la
+  convention réelle d'un projet se lit dans son historique, pas dans
+  une supposition.

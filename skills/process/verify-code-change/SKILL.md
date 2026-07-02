@@ -47,6 +47,9 @@ avant de rendre la main :
 - L'absence d'erreur de build ne garantit rien sur un langage à typage
   dynamique (Python, JavaScript) : ne jamais sauter l'étape des tests
   sous prétexte que le build/l'import a réussi.
-- <TODO: si votre projet utilise une commande de build/test/lint non
-  standard ou un monorepo avec plusieurs configurations, documentez-la
-  ici pour éviter que l'agent ne la re-découvre à chaque fois.>
+- Les commandes réelles de build/test/lint d'un projet (y compris les
+  configurations multiples d'un monorepo) sont apprises et consignées
+  par le subagent `test-runner` dans sa mémoire de projet
+  (`.claude/agent-memory/test-runner/`) ; à défaut, les lire dans la
+  configuration de CI du projet plutôt que de les deviner par
+  convention.

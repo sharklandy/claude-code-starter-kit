@@ -39,6 +39,7 @@ description: >
   n'aide pas un relecteur humain à comprendre ce qui a changé
   fonctionnellement — toujours inclure au moins un scénario manuel
   reproductible, même bref.
-- <TODO: si votre organisation impose des sections obligatoires
-  supplémentaires (checklist de sécurité, impact base de données...),
-  ajoutez-les ici.>
+- Si le repo contient un template de PR
+  (`.github/PULL_REQUEST_TEMPLATE.md` ou équivalent), le remplir
+  section par section — le format imposé par le projet a toujours
+  priorité sur la structure proposée par ce skill.

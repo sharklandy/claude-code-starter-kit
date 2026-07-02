@@ -1,0 +1,53 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  skills:
+    name: Validation des skills et subagents
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Self-test du validateur (dont la classe de bug 2a7e1c8)
+        run: bash scripts/validate-skills-selftest.sh
+
+      - name: Validation structurelle (frontmatter octet 0, name, description, Gotchas, TODO)
+        run: bash scripts/validate-skills.sh
+
+  install:
+    name: Smoke test install.sh
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install.sh doit être exécutable dans git (mode 100755)
+        run: |
+          mode="$(git ls-files -s install.sh | awk '{print $1}')"
+          if [ "$mode" != "100755" ]; then
+            echo "install.sh a le mode $mode au lieu de 100755" >&2
+            exit 1
+          fi
+
+      - name: Installation locale sur un répertoire temporaire
+        run: |
+          tmp="$(mktemp -d)"
+          ./install.sh --local "$tmp"
+          installed_skills="$(find "$tmp/.claude/skills" -name SKILL.md | wc -l)"
+          expected_skills="$(find skills -mindepth 3 -maxdepth 3 -name SKILL.md | wc -l)"
+          installed_agents="$(find "$tmp/.claude/agents" -maxdepth 1 -name '*.md' | wc -l)"
+          expected_agents="$(find .claude/agents -maxdepth 1 -name '*.md' | wc -l)"
+          echo "skills: $installed_skills/$expected_skills — agents: $installed_agents/$expected_agents"
+          [ "$installed_skills" -eq "$expected_skills" ]
+          [ "$installed_agents" -eq "$expected_agents" ]
+
+      - name: Les sous-dossiers reference/ sont copiés intégralement
+        run: |
+          tmp="$(mktemp -d)"
+          ./install.sh --local "$tmp" >/dev/null
+          for ref in security performance database-queries; do
+            test -f "$tmp/.claude/skills/code-review/reference/${ref}.md"
+          done

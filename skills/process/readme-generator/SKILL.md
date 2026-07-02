@@ -54,6 +54,8 @@ description: >
   déjà obsolètes par rapport au manifeste actuel (dépendance renommée,
   commande de script renommée) — comparer explicitement le contenu
   existant à l'état réel du manifeste avant de le considérer à jour.
-- <TODO: si votre projet a des sections obligatoires spécifiques
-  (badges de CI, lien vers une documentation externe, mention de
-  licence commerciale...), documentez-les ici.>
+- Les sections d'un README existant qui ne se déduisent pas du code
+  (badges, liens vers une doc externe, mentions légales ou de licence
+  commerciale) doivent être préservées telles quelles lors d'une
+  régénération — les recenser avant de générer, sous peine de les
+  détruire silencieusement.

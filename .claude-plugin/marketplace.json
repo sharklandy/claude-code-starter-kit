@@ -1,0 +1,61 @@
+{
+  "name": "claude-code-starter-kit",
+  "owner": {
+    "name": "sharklandy"
+  },
+  "description": "Skills, subagents et templates de boucles/workflows prêts à l'emploi pour Claude Code — installables en une commande.",
+  "plugins": [
+    {
+      "name": "starter-kit-essentials",
+      "source": "./",
+      "strict": false,
+      "description": "Le noyau du starter kit : 6 skills génériques développeur (revue de code à divulgation progressive, stratégie de test, vérification, débogage systématique, discipline d'agent, qualité de commit) + les 4 subagents à mémoire de projet.",
+      "version": "1.5.0",
+      "author": {
+        "name": "sharklandy"
+      },
+      "license": "MIT",
+      "repository": "https://github.com/sharklandy/claude-code-starter-kit",
+      "category": "development",
+      "keywords": ["skills", "subagents", "code-review", "testing", "starter-kit"],
+      "skills": [
+        "./skills/domains/code-review",
+        "./skills/domains/test-strategy",
+        "./skills/process/verify-code-change",
+        "./skills/process/systematic-debugging",
+        "./skills/process/avoid-agentic-pitfalls",
+        "./skills/process/commit-message-quality"
+      ],
+      "agents": [
+        "./.claude/agents/code-reviewer.md",
+        "./.claude/agents/test-runner.md",
+        "./.claude/agents/dependency-scout.md",
+        "./.claude/agents/bug-investigator.md"
+      ]
+    },
+    {
+      "name": "starter-kit-full",
+      "source": "./",
+      "strict": false,
+      "description": "Le starter kit complet : les 21 skills (process/ + domains/, templates vague 1 inclus) + les 4 subagents à mémoire de projet.",
+      "version": "1.5.0",
+      "author": {
+        "name": "sharklandy"
+      },
+      "license": "MIT",
+      "repository": "https://github.com/sharklandy/claude-code-starter-kit",
+      "category": "development",
+      "keywords": ["skills", "subagents", "workflows", "templates", "starter-kit"],
+      "skills": [
+        "./skills/process",
+        "./skills/domains"
+      ],
+      "agents": [
+        "./.claude/agents/code-reviewer.md",
+        "./.claude/agents/test-runner.md",
+        "./.claude/agents/dependency-scout.md",
+        "./.claude/agents/bug-investigator.md"
+      ]
+    }
+  ]
+}

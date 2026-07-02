@@ -43,5 +43,9 @@ description: >
   pas une couverture des cas limites réels — ne pas se fier uniquement
   au pourcentage rapporté par l'outil de couverture pour juger qu'un
   refactor est sûr.
-- <TODO: si votre projet a des zones connues comme "trop risquées pour
-  être refactorées sans supervision humaine explicite", listez-les ici.>
+- Les zones trop risquées pour un refactor sans supervision humaine se
+  repèrent par deux signaux : la mémoire de projet des subagents
+  `code-reviewer` et `bug-investigator` (`.claude/agent-memory/`) quand
+  elle existe, et une forte densité de commits `fix` récents sur les
+  mêmes fichiers dans `git log`. En présence de l'un des deux, demander
+  avant de refactorer.

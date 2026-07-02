@@ -1,5 +1,90 @@
 # Changelog
 
+## [1.5.0] - en cours
+
+### Ajouté
+
+- `.claude-plugin/marketplace.json` : le dépôt est désormais un
+  marketplace de plugins Claude Code natif (proposition 01 de la roadmap
+  v2). Installation en une commande :
+  `/plugin marketplace add sharklandy/claude-code-starter-kit`, puis
+  `/plugin install starter-kit-essentials@claude-code-starter-kit`
+  (noyau : 6 skills vague 2 + 4 subagents) ou
+  `starter-kit-full@claude-code-starter-kit` (les 21 skills + 4
+  subagents). Mises à jour via `/plugin marketplace update`. Vérifié en
+  installation réelle : les composants s'enregistrent sous leur
+  namespace (`starter-kit-*:<nom>`), et le préchargement
+  `skills: [code-review]` des subagents résout correctement le skill
+  du même plugin.
+- `README.md` : le Quickstart documente la voie plugin (recommandée) et
+  conserve `install.sh` comme voie alternative (copie physique, noms de
+  skills courts sans préfixe).
+- **Important pour les mainteneurs** : le champ `version` des deux
+  entrées de `marketplace.json` doit être bumpé à chaque release, sinon
+  les utilisateurs ne reçoivent pas la mise à jour.
+- CI de validation des skills (proposition 02) :
+  `.github/workflows/validate.yml` + `scripts/validate-skills.sh`
+  (exécutable en local). Vérifie sur chaque PR : frontmatter YAML à
+  l'octet 0 de chaque SKILL.md et subagent (la classe de bug corrigée
+  en 2a7e1c8), `name` kebab-case identique au dossier/fichier,
+  `description` présente, section `## Gotchas` non vide, aucun
+  `<TODO:` hors skills `-template`, mode `100755` d'`install.sh` et
+  smoke test d'installation complète (`reference/` inclus).
+- `scripts/validate-skills-selftest.sh` : 8 fixtures prouvant que le
+  validateur attrape chaque classe d'erreur — dont la reconstruction
+  exacte du bug 2a7e1c8 (commentaire HTML avant le frontmatter).
+- Badge « validate » dans le README.
+- README bilingue (proposition 03) : `README.md` devient la version
+  anglaise (rédigée nativement, porte d'entrée du dépôt) ; le contenu
+  français vit désormais dans `README.fr.md`, avec lien croisé entre
+  les deux. Le guide théorique et les corps de skills restent en
+  français — assumé et annoncé dans la version anglaise. Les
+  arborescences des deux README intègrent `.claude-plugin/`, `scripts/`
+  et la CI.
+- Reste à faire côté GitHub (actions sur le remote, hors périmètre de
+  cette branche) : description du dépôt, topics, releases taguées.
+
+- Démos enregistrées dans le README (proposition 05) :
+  `docs/assets/demo-code-review.svg` (le skill `code-review` se
+  déclenche spontanément sur une demande de relecture — invocation
+  `Skill(code-review)` visible — et rend une synthèse labellisée) et
+  `docs/assets/demo-test-runner.svg` (le subagent
+  `starter-kit-essentials:test-runner` exécute la suite et ne rapporte
+  que l'échec). Sessions réelles capturées via `script --log-timing`,
+  converties en asciicast (temps morts plafonnés à 2 s) puis en SVG
+  animé via `svg-term-cli` ; informations personnelles caviardées à
+  longueur constante. Non réalisé, à décider : le « avant/après »
+  bonus de la proposition.
+
+- Alignement sur le standard ouvert Agent Skills et évals de
+  déclenchement (proposition 06) :
+  - le validateur vérifie désormais les contraintes du standard
+    (agentskills.io) : `name` ≤ 64 caractères, `description` ≤ 1024
+    caractères — en plus des règles kebab-case/dossier déjà en place ;
+  - les 6 skills du noyau essentials embarquent un `evals/evals.json`
+    au format skill-creator vérifié dans la doc officielle
+    (`{skill_name, evals:[{id, prompt, expected_output, assertions}]}`) :
+    2-3 prompts réalistes par skill avec assertions observables ;
+  - la CI valide la structure de tout `evals/evals.json` (JSON valide,
+    `skill_name` = dossier, champs requis) ; l'exécution des évals
+    (consommatrice de tokens API) reste manuelle, via le plugin
+    `skill-creator` du marketplace officiel Anthropic ;
+  - section « Qualité » ajoutée aux deux README.
+
+### Modifié
+
+- La promesse « utilisable tel quel » est désormais tenue (proposition
+  04) : plus aucun placeholder `<TODO:` hors des 4 skills `-template`.
+  Les 16 occurrences des 15 skills concernés sont réécrites en gotchas
+  génériques réellement vrais partout : renvoi vers la mémoire de
+  projet des subagents (`.claude/agent-memory/`) pour les zones à
+  risque, outils de debug et commandes de CI ; détection dans le repo
+  (template de PR, config de release automatique, générateur de
+  scaffolding, convention de commit lue dans `git log`) pour le reste.
+  Le suffixe `-template` redevient le seul marqueur « nécessite
+  adaptation », et la règle est vérifiée par la CI. La validation
+  passe : 21 skills, 4 subagents, 0 erreur.
+
 ## [1.4.0] - 2026-07-01
 
 ### Ajouté

@@ -161,7 +161,7 @@ Une fois un verdict ✅ obtenu (directement ou après ajustement) :
 1. Vérifier d'abord si `goals/goal-templates.md`,
    `workflows/workflow-prompts.md` ou `routines/routine-templates.md`
    contient déjà un template proche de la tâche décrite, et proposer de
-   l'adapter (en remplaçant ses `<TODO: ...>`) plutôt que d'en écrire un
+   l'adapter (en remplaçant ses placeholders) plutôt que d'en écrire un
    nouveau intégralement.
 2. Si aucun template existant ne correspond, rédiger un nouveau prompt
    en respectant le format déjà utilisé dans ces fichiers : contexte
@@ -183,7 +183,9 @@ Une fois un verdict ✅ obtenu (directement ou après ajustement) :
   en réalité une simple boucle turn-based doit recevoir un verdict ❌
   clair (Règle 5), sans que le skill se contente de suivre l'intention
   initiale par complaisance.
-- <TODO: si votre équipe a ses propres seuils par défaut (plafond de
-  tentatives standard, budget de tokens standard par type de tâche...),
-  documentez-les ici pour que les reformulations de l'étape 5 et les
-  prompts de l'étape 7 les utilisent par défaut.>
+- En l'absence de seuils propres à l'équipe, utiliser comme valeurs par
+  défaut les plafonds des templates de `goals/goal-templates.md` (5 à 8
+  tentatives) et les budgets de tokens indiqués dans
+  `workflows/workflow-prompts.md` — et toujours annoncer le seuil
+  retenu explicitement dans le verdict plutôt que de le laisser
+  implicite.

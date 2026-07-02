@@ -22,10 +22,9 @@ back partially verified work.
 
 ## Gotchas
 
-- <TODO: décrivez ici le premier piège récurrent rencontré sur votre
-  stack frontend — par exemple un délai d'apparition d'un message de
-  confirmation, un état de chargement à attendre plutôt qu'un délai
-  fixe, etc.>
-- <TODO: ajoutez une ligne à chaque fois que Claude rate un cas
-  particulier malgré ce skill, plutôt que de vous contenter de corriger
-  le cas isolé (voir docs/guide-complet.md, Partie 1.6).>
+- Attendre un **état observable** (message de confirmation affiché,
+  spinner disparu) et jamais un délai fixe : un délai fixe passe en
+  local et échoue en CI ou sur une machine plus lente.
+- Ajouter une ligne à cette section à chaque fois que Claude rate un
+  cas particulier malgré ce skill, plutôt que de corriger uniquement le
+  cas isolé (voir `docs/guide-complet.md`, Partie 1.6).

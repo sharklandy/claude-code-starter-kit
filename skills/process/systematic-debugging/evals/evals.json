@@ -1,0 +1,25 @@
+{
+  "skill_name": "systematic-debugging",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "le total du panier est parfois faux d'un centime, tu peux corriger ?",
+      "expected_output": "Un cycle de diagnostic discipliné : reproduction fiable du bug d'abord, minimisation, hypothèse instrumentée, correctif, puis re-vérification contre la reproduction initiale — pas de correctif proposé avant d'avoir reproduit.",
+      "assertions": [
+        "Une reproduction fiable du bug est établie avant toute hypothèse de correctif",
+        "Le correctif final est re-vérifié contre la reproduction initiale, pas seulement contre un cas simplifié",
+        "Si le correctif ne change rien à la reproduction, le diagnostic reprend au lieu d'empiler un second correctif"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "ce test échoue seulement en CI, jamais en local — une idée ?",
+      "expected_output": "Un diagnostic qui traite l'écart local/CI comme le signal central (environnement, ordre des tests, parallélisme, timing) au lieu de proposer un correctif au hasard ou de relancer la CI en boucle.",
+      "assertions": [
+        "Les différences local/CI concrètes sont énumérées et testées (versions, variables d'environnement, parallélisme, ordre d'exécution)",
+        "Aucun correctif n'est proposé avant d'avoir identifié la cause de l'écart",
+        "Relancer la CI « pour voir » n'est pas présenté comme une solution"
+      ]
+    }
+  ]
+}
