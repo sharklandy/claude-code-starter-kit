@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: systematic-debugging
 description: >
@@ -6,6 +5,7 @@ description: >
   whenever asked to fix a bug, investigate an error, or explain why
   something isn't working — before proposing a fix.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Runbook de débogage systématique (générique)
 

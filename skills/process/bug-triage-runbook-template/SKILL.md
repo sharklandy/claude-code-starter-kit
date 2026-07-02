@@ -1,4 +1,3 @@
-<!-- Source : docs/guide-complet.md, Partie 7, Cas 3 (kaerio-feedback-runbook + verify-kaerio-fix) — généralisé, sans référence à l'application fictive d'origine -->
 ---
 name: bug-triage-runbook-template
 description: >
@@ -6,6 +5,7 @@ description: >
   Trigger whenever processing a message from
   <TODO: nom du canal ou de la source des retours, ex. #feedback>.
 ---
+<!-- Source : docs/guide-complet.md, Partie 7, Cas 3 (kaerio-feedback-runbook + verify-kaerio-fix) — généralisé, sans référence à l'application fictive d'origine -->
 
 # Runbook de traitement des retours utilisateurs
 

@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: dependency-update-check
 description: >
@@ -6,6 +5,7 @@ description: >
   dependency version. Trigger whenever asked to upgrade, update, or
   bump a package/library/dependency version.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Vérifier une mise à jour de dépendance (générique)
 

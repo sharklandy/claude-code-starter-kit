@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" -->
 ---
 name: readme-generator
 description: >
@@ -6,6 +5,7 @@ description: >
   analysis of its structure, dependencies, scripts, tests and CI.
   Trigger whenever asked to write, generate, or update a README.
 ---
+<!-- Skill générique de la "vague 2" -->
 
 # Générer ou mettre à jour un README (générique)
 

@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" — intervient en amont des templates goals/, workflows/, routines/ -->
 ---
 name: choose-your-loop
 description: >
@@ -9,6 +8,7 @@ description: >
   this", "make Claude do this on its own", "run this in a loop" — always
   before a final prompt is drafted, not after.
 ---
+<!-- Skill générique de la "vague 2" — intervient en amont des templates goals/, workflows/, routines/ -->
 
 # Choisir et valider son mécanisme de boucle (avant de rédiger le prompt)
 

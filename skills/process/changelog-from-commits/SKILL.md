@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: changelog-from-commits
 description: >
@@ -6,6 +5,7 @@ description: >
   or entry. Trigger whenever asked to prepare a release, update the
   changelog, or summarize changes since the last version.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Générer un CHANGELOG à partir de l'historique git (générique)
 

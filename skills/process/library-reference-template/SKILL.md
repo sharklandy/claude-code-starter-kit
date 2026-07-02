@@ -1,4 +1,3 @@
-<!-- Source : docs/guide-complet.md, Partie 3.2 (catégorie 1, "Référence de librairie et d'API") et Partie 3.3 (bonnes pratiques de rédaction) -->
 ---
 name: library-reference-template
 description: >
@@ -6,6 +5,7 @@ description: >
   ou externe> correctly. Trigger whenever a task involves importing,
   configuring, or calling <TODO: nom du package ou de la commande>.
 ---
+<!-- Source : docs/guide-complet.md, Partie 3.2 (catégorie 1, "Référence de librairie et d'API") et Partie 3.3 (bonnes pratiques de rédaction) -->
 
 # Référence : <TODO: nom de la librairie/CLI/SDK>
 

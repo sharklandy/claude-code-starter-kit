@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 ---
 name: commit-message-quality
 description: >
@@ -6,6 +5,7 @@ description: >
   whenever about to run `git commit`, or when asked to clean up / split
   a commit or commit history.
 ---
+<!-- Skill générique de la "vague 2" (par opposition aux skills orientés cas d'usage de la vague 1) -->
 
 # Qualité des messages de commit (générique)
 

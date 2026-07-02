@@ -1,8 +1,8 @@
-<!-- Source : docs/guide-complet.md, Partie 1.2 (Boucle turn-based) -->
 ---
 name: verify-frontend-change
 description: Verify any UI change end-to-end before declaring it done. Trigger whenever a task touches a component, page, button, form control, or any other visible frontend behavior.
 ---
+<!-- Source : docs/guide-complet.md, Partie 1.2 (Boucle turn-based) -->
 
 # Verifying frontend changes
 

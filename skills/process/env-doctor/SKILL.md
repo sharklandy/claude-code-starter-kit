@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" -->
 ---
 name: env-doctor
 description: >
@@ -8,6 +7,7 @@ description: >
   to start, build, or install for reasons that look environmental
   rather than a code bug.
 ---
+<!-- Skill générique de la "vague 2" -->
 
 # Diagnostic d'environnement de développement (générique)
 

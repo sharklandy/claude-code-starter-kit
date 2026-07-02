@@ -1,4 +1,3 @@
-<!-- Skill générique de la "vague 2" — discipline comportementale transversale, indépendante de tout domaine technique -->
 ---
 name: avoid-agentic-pitfalls
 description: >
@@ -7,6 +6,7 @@ description: >
   over-engineering, and out-of-scope edits. Trigger on any substantial
   code change, not just specific cases.
 ---
+<!-- Skill générique de la "vague 2" — discipline comportementale transversale, indépendante de tout domaine technique -->
 
 # Éviter les dérives classiques d'un agent de code
 
