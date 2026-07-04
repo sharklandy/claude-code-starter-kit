@@ -1,5 +1,7 @@
 # Prompt d'onboarding
 
+> **Ce prompt ne concerne que l'installation par `install.sh`.** Si vous avez installé le kit en plugin (`/plugin install ...`), il n'y a rien à remplir : les skills hors `-template` ne contiennent aucun placeholder, et les fichiers d'un plugin vivent dans un cache non modifiable, hors des chemins (`./.claude/skills/`, `~/.claude/skills/`) où ce prompt cherche. Pour adapter un skill `-template` à votre domaine, installez-le via `install.sh` ou copiez son dossier dans le `.claude/skills/` de votre projet.
+
 Ce prompt est destiné à être collé **tel quel, sans modification**, dans une session Claude Code, juste après avoir installé les skills de ce repo avec `install.sh` (voir `README.md`, section "Démarrer sur un projet"). Il fait le travail que vous feriez sinon manuellement dans chaque `SKILL.md` : remplacer les placeholders `<TODO: ...>` par les informations réelles de votre projet.
 
 Le prompt distingue deux cas, détectés automatiquement par Claude :

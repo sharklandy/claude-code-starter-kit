@@ -7,7 +7,7 @@
 
 ## Quickstart
 
-**Voie recommandée — plugin Claude Code** (une commande, mises à jour intégrées) :
+**Voie recommandée — plugin Claude Code** (une commande, mises à jour intégrées). Depuis une session Claude Code ouverte dans n'importe quel projet (lancez `claude` dans un terminal), tapez :
 
 ```
 /plugin marketplace add sharklandy/claude-code-starter-kit
@@ -31,7 +31,7 @@ chmod +x install.sh
 ./install.sh --global   # ou --local /chemin/vers/votre/projet
 ```
 
-Dans les deux cas, collez ensuite le [prompt d'onboarding](./docs/onboarding-prompt.md) dans Claude Code pour que les skills s'adaptent automatiquement à votre projet.
+**Quelle voie choisir ?** La voie plugin est prête à l'emploi telle quelle — rien à configurer : les skills hors templates ne contiennent aucun placeholder à remplir, et les subagents apprennent les spécificités de votre projet (commandes de CI, zones à risque, tests flaky) via leur mémoire de projet au fil de l'usage. Choisissez la copie physique si vous voulez éditer les fichiers des skills — y compris adapter les skills `-template` à votre domaine avec le [prompt d'onboarding](./docs/onboarding-prompt.md) (ce prompt ne concerne que cette voie : il cherche les skills dans `.claude/skills/`, là où `install.sh` les installe).
 
 Une bibliothèque de skills prêts à l'emploi et de templates de prompts `/goal`, `/loop`, `/schedule` et workflows dynamiques pour démarrer avec Claude Code en quelques minutes.
 
@@ -150,12 +150,10 @@ Dans les deux cas, si un skill du même nom existe déjà à la destination, le 
 
 ## Démarrer sur un projet
 
-Le parcours complet tient en 4 étapes : cloner le repo → lancer `install.sh` → coller le [prompt d'onboarding](./docs/onboarding-prompt.md) dans Claude Code → suivre les instructions que Claude vous donne.
-
-Ce prompt analyse automatiquement votre situation et se comporte différemment selon le cas :
-
-- **Projet existant** : Claude analyse votre code, vos dépendances, vos commandes de build/test/lint et votre historique git, puis remplit lui-même les placeholders `<TODO: ...>` des skills installés qu'il peut déduire avec confiance — le reste est signalé explicitement comme "à compléter manuellement".
-- **Projet vierge** : Claude ne devine rien à partir de code qui n'existe pas. Il vous pose quelques questions de cadrage (stack envisagée, type d'application, convention de commit...), puis classe les skills installés en "actifs dès maintenant" et "en attente" du premier code réel.
+- **Voie plugin — aucune étape de configuration.** Ouvrez Claude Code dans votre projet et travaillez : les skills se déclenchent d'eux-mêmes (voir les démos ci-dessus) et les subagents accumulent la connaissance du projet au fil de l'usage. Ne collez **pas** le prompt d'onboarding — il n'a rien à remplir sur cette voie.
+- **Voie install.sh — une étape de configuration.** Collez le [prompt d'onboarding](./docs/onboarding-prompt.md) dans Claude Code après l'installation. Il analyse votre situation et se comporte différemment selon le cas :
+  - **Projet existant** : Claude analyse votre code, vos dépendances, vos commandes de build/test/lint et votre historique git, puis remplit lui-même les placeholders `<TODO: ...>` des skills `-template` installés qu'il peut déduire avec confiance — le reste est signalé explicitement comme "à compléter manuellement".
+  - **Projet vierge** : Claude ne devine rien à partir de code qui n'existe pas. Il vous pose quelques questions de cadrage (stack envisagée, type d'application, convention de commit...), puis classe les skills installés en "actifs dès maintenant" et "en attente" du premier code réel.
 
 Voir [`docs/onboarding-prompt.md`](./docs/onboarding-prompt.md) pour le détail des deux cas et le prompt complet.
 
@@ -163,7 +161,9 @@ Si vous n'êtes pas sûr du mécanisme à choisir (`/goal`, workflow dynamique, 
 
 ## Comment adapter les templates à votre stack
 
-Le [prompt d'onboarding](./docs/onboarding-prompt.md) ci-dessus automatise le remplissage des placeholders `<TODO: description>` présents dans chaque `SKILL.md`. Si vous préférez les adapter manuellement plutôt que de passer par ce prompt :
+Cette section concerne la **voie copie physique** (`install.sh`), où les fichiers des skills vivent dans `.claude/skills/` et vous appartiennent. Les skills installés en plugin vivent dans un cache écrasé à chaque mise à jour — ne les éditez pas là ; pour personnaliser un skill, passez par `install.sh` (ou copiez le dossier de ce skill depuis ce repo vers le `.claude/skills/` de votre projet).
+
+Le [prompt d'onboarding](./docs/onboarding-prompt.md) automatise le remplissage des placeholders `<TODO: description>` des skills `-template`. Si vous préférez les adapter manuellement plutôt que de passer par ce prompt :
 
 1. Gardez la structure existante — en particulier ne videz jamais la section `## Gotchas` : c'est le contenu au plus fort signal d'un skill (voir `docs/guide-complet.md`, Partie 3.3).
 2. Testez le déclenchement du skill dans une session Claude Code réelle : s'il ne se déclenche pas spontanément sur une tâche pertinente, la `description` du frontmatter n'est probablement pas assez explicite sur les mots-clés qui doivent l'activer.

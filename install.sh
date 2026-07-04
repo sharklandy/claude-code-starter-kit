@@ -11,10 +11,10 @@ SKILLS_SRC="${SCRIPT_DIR}/skills"
 AGENTS_SRC="${SCRIPT_DIR}/.claude/agents"
 
 usage() {
-  echo "Usage: $0 --global | --local <chemin>"
+  echo "Usage: $0 --global | --local <path>"
   echo ""
-  echo "  --global          installe les skills dans ~/.claude/skills/"
-  echo "  --local <chemin>  installe les skills dans <chemin>/.claude/skills/"
+  echo "  --global          install the skills into ~/.claude/skills/"
+  echo "  --local <path>    install the skills into <path>/.claude/skills/"
   exit 1
 }
 
@@ -29,12 +29,12 @@ case "$1" in
     ;;
   --local)
     if [[ $# -lt 2 ]]; then
-      echo "Erreur : --local nécessite un chemin." >&2
+      echo "Error: --local requires a path." >&2
       usage
     fi
     TARGET_DIR="$2"
     if [[ ! -d "${TARGET_DIR}" ]]; then
-      echo "Erreur : le chemin '${TARGET_DIR}' n'existe pas ou n'est pas un répertoire." >&2
+      echo "Error: path '${TARGET_DIR}' does not exist or is not a directory." >&2
       exit 1
     fi
     DEST="${TARGET_DIR}/.claude/skills"
@@ -44,18 +44,18 @@ case "$1" in
     usage
     ;;
   *)
-    echo "Erreur : option inconnue '$1'." >&2
+    echo "Error: unknown option '$1'." >&2
     usage
     ;;
 esac
 
 if [[ ! -d "${SKILLS_SRC}" ]]; then
-  echo "Erreur : dossier source '${SKILLS_SRC}' introuvable." >&2
+  echo "Error: source directory '${SKILLS_SRC}' not found." >&2
   exit 1
 fi
 
 if ! mkdir -p "${DEST}" 2>/dev/null; then
-  echo "Erreur : impossible de créer le répertoire de destination '${DEST}' (permissions ?)." >&2
+  echo "Error: could not create destination directory '${DEST}' (permissions?)." >&2
   exit 1
 fi
 
@@ -73,13 +73,13 @@ while IFS= read -r -d '' skill_md; do
   dest_path="${DEST}/${skill_name}"
 
   if [[ -e "${dest_path}" ]]; then
-    read -r -p "Le skill '${skill_name}' existe déjà dans ${DEST}. L'écraser ? [y/N] " reply
+    read -r -p "Skill '${skill_name}' already exists in ${DEST}. Overwrite? [y/N] " reply
     case "${reply}" in
       [yY]|[yY][eE][sS])
         rm -rf "${dest_path}"
         ;;
       *)
-        echo "  -> ignoré : ${skill_name}"
+        echo "  -> skipped: ${skill_name}"
         SKIPPED+=("${skill_name}")
         continue
         ;;
@@ -87,7 +87,7 @@ while IFS= read -r -d '' skill_md; do
   fi
 
   if ! cp -r "${skill_path}" "${dest_path}"; then
-    echo "Erreur : échec de la copie de '${skill_name}' vers '${dest_path}'." >&2
+    echo "Error: failed to copy '${skill_name}' to '${dest_path}'." >&2
     exit 1
   fi
 
@@ -101,7 +101,7 @@ AGENTS_SKIPPED=()
 
 if [[ -d "${AGENTS_SRC}" ]]; then
   if ! mkdir -p "${AGENTS_DEST}" 2>/dev/null; then
-    echo "Erreur : impossible de créer le répertoire de destination '${AGENTS_DEST}' (permissions ?)." >&2
+    echo "Error: could not create destination directory '${AGENTS_DEST}' (permissions?)." >&2
     exit 1
   fi
 
@@ -111,13 +111,13 @@ if [[ -d "${AGENTS_SRC}" ]]; then
     agent_dest="${AGENTS_DEST}/${agent_file}"
 
     if [[ -e "${agent_dest}" ]]; then
-      read -r -p "Le subagent '${agent_name}' existe déjà dans ${AGENTS_DEST}. L'écraser ? [y/N] " reply
+      read -r -p "Subagent '${agent_name}' already exists in ${AGENTS_DEST}. Overwrite? [y/N] " reply
       case "${reply}" in
         [yY]|[yY][eE][sS])
           rm -f "${agent_dest}"
           ;;
         *)
-          echo "  -> ignoré : ${agent_name}"
+          echo "  -> skipped: ${agent_name}"
           AGENTS_SKIPPED+=("${agent_name}")
           continue
           ;;
@@ -125,7 +125,7 @@ if [[ -d "${AGENTS_SRC}" ]]; then
     fi
 
     if ! cp "${agent_md}" "${agent_dest}"; then
-      echo "Erreur : échec de la copie de '${agent_name}' vers '${agent_dest}'." >&2
+      echo "Error: failed to copy '${agent_name}' to '${agent_dest}'." >&2
       exit 1
     fi
 
@@ -134,30 +134,30 @@ if [[ -d "${AGENTS_SRC}" ]]; then
 fi
 
 echo ""
-echo "Résumé de l'installation :"
-echo "  Destination : ${DEST}"
+echo "Install summary:"
+echo "  Destination: ${DEST}"
 if [[ ${#INSTALLED[@]} -gt 0 ]]; then
-  echo "  Skills installés (${#INSTALLED[@]}) :"
+  echo "  Skills installed (${#INSTALLED[@]}):"
   for s in "${INSTALLED[@]}"; do
     echo "    - ${s}"
   done
 else
-  echo "  Aucun skill installé."
+  echo "  No skill installed."
 fi
 if [[ ${#SKIPPED[@]} -gt 0 ]]; then
-  echo "  Skills ignorés (${#SKIPPED[@]}) :"
+  echo "  Skills skipped (${#SKIPPED[@]}):"
   for s in "${SKIPPED[@]}"; do
     echo "    - ${s}"
   done
 fi
 if [[ ${#AGENTS_INSTALLED[@]} -gt 0 ]]; then
-  echo "  Subagents installés (${#AGENTS_INSTALLED[@]}) dans ${AGENTS_DEST} :"
+  echo "  Subagents installed (${#AGENTS_INSTALLED[@]}) into ${AGENTS_DEST}:"
   for a in "${AGENTS_INSTALLED[@]}"; do
     echo "    - ${a}"
   done
 fi
 if [[ ${#AGENTS_SKIPPED[@]} -gt 0 ]]; then
-  echo "  Subagents ignorés (${#AGENTS_SKIPPED[@]}) :"
+  echo "  Subagents skipped (${#AGENTS_SKIPPED[@]}):"
   for a in "${AGENTS_SKIPPED[@]}"; do
     echo "    - ${a}"
   done

@@ -1,5 +1,29 @@
 # Changelog
 
+## [Non publié]
+
+### Corrigé
+
+- Audit de friction d'installation « premier contact » (branche
+  `feature/setup-friction-audit`) — friction prouvée en environnement
+  vierge puis corrigée :
+  - **Le prompt d'onboarding menait à une impasse sur la voie plugin**
+    (recommandée) : il cherche les skills dans `.claude/skills/` alors
+    qu'un plugin vit dans un cache, et depuis la 1.5.0 les skills hors
+    `-template` n'ont de toute façon plus de `<TODO:>` à remplir. Les
+    deux README disent désormais que l'onboarding ne concerne que la
+    voie `install.sh` (la voie plugin est prête à l'emploi sans
+    configuration), et `docs/onboarding-prompt.md` l'annonce en tête.
+  - La section « adapter les templates » précise que l'édition manuelle
+    ne vaut que pour la copie physique — le cache d'un plugin est
+    écrasé à chaque mise à jour.
+  - Le Quickstart précise que les commandes `/plugin ...` se tapent
+    dans une session Claude Code.
+  - « The whole journey is four steps » suivi de trois étapes : section
+    réécrite par voie d'installation.
+  - Messages d'`install.sh` traduits en anglais (cohérence avec le
+    README principal).
+
 ## [1.5.0] - 2026-07-03
 
 ### Ajouté
