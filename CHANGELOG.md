@@ -1,6 +1,6 @@
 # Changelog
 
-## [Non publié]
+## [1.5.1] - 2026-07-05
 
 ### Corrigé
 
