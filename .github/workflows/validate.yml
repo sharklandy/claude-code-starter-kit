@@ -15,8 +15,14 @@ jobs:
       - name: Self-test du validateur (dont la classe de bug 2a7e1c8)
         run: bash scripts/validate-skills-selftest.sh
 
-      - name: Validation structurelle (frontmatter octet 0, name, description, Gotchas, TODO)
+      - name: Validation structurelle (frontmatter octet 0, name, description, Gotchas, TODO, marketplace, liens, préchargements)
         run: bash scripts/validate-skills.sh
+
+      - name: Installer le CLI Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Validation du manifeste plugin (claude plugin validate --strict)
+        run: claude plugin validate . --strict
 
   install:
     name: Smoke test install.sh

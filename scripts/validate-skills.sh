@@ -143,6 +143,79 @@ PYEOF
   echo "  ${EVALS_COUNT} fichiers d'évals analysés."
 fi
 
+# --- Cohérence du repo (marketplace, versions, liens, préchargements) --
+# Chaque check ne s'exécute que si le fichier concerné existe : le
+# validateur reste utilisable sur une arborescence partielle (fixtures
+# du self-test) tout en gardant le repo complet sous surveillance.
+
+if [[ -f "$ROOT/.claude-plugin/marketplace.json" ]] && command -v python3 >/dev/null 2>&1; then
+  echo "Validation de .claude-plugin/marketplace.json :"
+  if ! err="$(python3 - "$ROOT" <<'PYEOF' 2>&1
+import json, os, re, sys
+root = sys.argv[1]
+m = json.load(open(os.path.join(root, ".claude-plugin/marketplace.json")))
+plugins = m["plugins"]
+
+# 1. Tout chemin skills:/agents: déclaré doit exister sur le disque.
+missing = []
+for p in plugins:
+    for path in p.get("skills", []) + p.get("agents", []):
+        rel = path[2:] if path.startswith("./") else path
+        if not os.path.exists(os.path.join(root, rel)):
+            missing.append(f"{p['name']}: {path}")
+assert not missing, "chemin(s) déclaré(s) introuvable(s) sur le disque : " + ", ".join(missing)
+
+# 2. Toutes les entrées doivent porter la même version.
+versions = {p.get("version") for p in plugins}
+assert len(versions) == 1, f"versions divergentes entre les entrées du marketplace : {sorted(versions)}"
+mkt_version = versions.pop()
+
+# 3. La version du marketplace doit être celle de la dernière release
+#    datée du CHANGELOG (la classe d'oubli du finding 01).
+chlog = os.path.join(root, "CHANGELOG.md")
+if os.path.exists(chlog):
+    versioned = re.findall(r"^## \[(\d+\.\d+\.\d+)\]", open(chlog).read(), re.M)
+    if versioned:
+        assert mkt_version == versioned[0], (
+            f"version du marketplace ({mkt_version}) != dernière release du CHANGELOG ({versioned[0]}) "
+            "— bumper marketplace.json ou utiliser scripts/release.sh")
+PYEOF
+)"; then
+    fail ".claude-plugin/marketplace.json : ${err##*AssertionError: }"
+  else
+    echo "  chemins, versions et cohérence CHANGELOG : OK"
+  fi
+fi
+
+README_LINKS_CHECKED=0
+for readme in "$ROOT/README.md" "$ROOT/README.fr.md"; do
+  [[ -f "$readme" ]] || continue
+  while IFS= read -r link; do
+    README_LINKS_CHECKED=$((README_LINKS_CHECKED + 1))
+    if [[ ! -e "$ROOT/${link#./}" ]]; then
+      fail "$(basename "$readme") : lien relatif cassé -> $link"
+    fi
+  done < <(grep -oE '\]\((\./[^)#]+)\)' "$readme" | sed 's/](\(.*\))/\1/' | sort -u)
+done
+if [[ $README_LINKS_CHECKED -gt 0 ]]; then
+  echo "Liens relatifs des README : ${README_LINKS_CHECKED} vérifiés."
+fi
+
+# Champs skills: préchargés par les subagents : chaque skill listé doit
+# exister sous skills/*/<nom>/SKILL.md, sinon le préchargement échouera
+# silencieusement à l'exécution (simple warning côté Claude Code).
+if [[ -d "$ROOT/.claude/agents" ]]; then
+  while IFS= read -r -d '' agent_md; do
+    rel="${agent_md#"$ROOT"/}"
+    while IFS= read -r preload; do
+      [[ -n "$preload" ]] || continue
+      if ! compgen -G "$ROOT/skills/*/$preload/SKILL.md" >/dev/null; then
+        fail "$rel : skill préchargé '$preload' introuvable sous skills/*/$preload/"
+      fi
+    done < <(fm_block "$agent_md" | awk '/^skills:/{f=1;next} f && /^[[:space:]]*-[[:space:]]/{sub(/^[[:space:]]*-[[:space:]]*/,""); print; next} f && /^[a-zA-Z_-]+:/{f=0}')
+  done < <(find "$ROOT/.claude/agents" -mindepth 1 -maxdepth 1 -type f -name "*.md" -print0 | sort -z)
+fi
+
 # --- Verdict -----------------------------------------------------------
 
 if [[ $ERRORS -gt 0 ]]; then
