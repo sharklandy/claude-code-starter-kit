@@ -19,7 +19,7 @@ And the `test-runner` subagent running an entire test suite in its own context, 
 
 ## Quickstart
 
-**Recommended — install as a Claude Code plugin** (one command, built-in updates):
+**Recommended — install as a Claude Code plugin** (one command, built-in updates). From a Claude Code session opened in any project (run `claude` in a terminal), type:
 
 ```
 /plugin marketplace add sharklandy/claude-code-starter-kit
@@ -43,7 +43,7 @@ chmod +x install.sh
 ./install.sh --global   # or --local /path/to/your/project
 ```
 
-Either way, paste the [onboarding prompt](./docs/onboarding-prompt.md) into Claude Code afterwards so the skills adapt themselves to your project.
+**Which path should you pick?** The plugin path is ready to use as-is — nothing to configure: the non-template skills contain no placeholders to fill, and the subagents learn your project's specifics (CI commands, risk areas, flaky tests) through their per-project memory as you use them. Pick the physical copy if you want to edit the skill files — including adapting the `-template` skills to your own domain with the [onboarding prompt](./docs/onboarding-prompt.md) (that prompt only applies to this path: it looks for skills in `.claude/skills/`, where `install.sh` puts them).
 
 ## Why this kit
 
@@ -129,16 +129,16 @@ In both cases, if a skill with the same name already exists at the destination, 
 
 ## Getting started on a project
 
-The whole journey is four steps: install (plugin or `install.sh`) → paste the [onboarding prompt](./docs/onboarding-prompt.md) into Claude Code → follow the instructions Claude gives you.
-
-The onboarding prompt analyzes your situation and behaves accordingly:
-
-- **Existing project**: Claude analyzes your code, dependencies, build/test/lint commands and git history, then fills in the `<TODO: ...>` placeholders of installed skills it can deduce with confidence — everything else is explicitly flagged as "fill in manually".
-- **Blank project**: Claude guesses nothing from code that doesn't exist. It asks a few scoping questions (intended stack, application type, commit convention...), then classifies installed skills as "active now" vs "waiting" for the first real code.
+- **Plugin path — no setup step.** Open Claude Code in your project and start working: skills trigger on their own (see the demos above), and the subagents accumulate project knowledge as you use them. Do **not** paste the onboarding prompt — it has nothing to fill on this path.
+- **install.sh path — one setup step.** Paste the [onboarding prompt](./docs/onboarding-prompt.md) into Claude Code after installing. It analyzes your situation and behaves accordingly:
+  - **Existing project**: Claude analyzes your code, dependencies, build/test/lint commands and git history, then fills in the `<TODO: ...>` placeholders of the installed `-template` skills it can deduce with confidence — everything else is explicitly flagged as "fill in manually".
+  - **Blank project**: Claude guesses nothing from code that doesn't exist. It asks a few scoping questions (intended stack, application type, commit convention...), then classifies installed skills as "active now" vs "waiting" for the first real code.
 
 If you're unsure which mechanism to pick (`/goal`, dynamic workflow, or a routine), use the `choose-your-loop` skill **before** grabbing anything from `goals/`, `workflows/` or `routines/`: it frames the task, detects a success criterion that's too vague, and validates (or corrects) the choice before writing the final prompt.
 
 ## Adapting the templates to your stack
+
+This section applies to the **physical-copy path** (`install.sh`), where the skill files live in `.claude/skills/` and are yours to edit. Skills installed as a plugin live in a cache that is overwritten on every update — don't edit them there; to customize a skill, install through `install.sh` instead (or copy that skill's folder from this repo into your project's `.claude/skills/`).
 
 The [onboarding prompt](./docs/onboarding-prompt.md) automates the placeholder filling. If you prefer doing it by hand:
 
