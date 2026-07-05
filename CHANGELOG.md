@@ -67,6 +67,9 @@
   et la CI.
 - Reste à faire côté GitHub (actions sur le remote, hors périmètre de
   cette branche) : description du dépôt, topics, releases taguées.
+  *(Mise à jour : description + topics faits le 2026-07-03 via
+  `gh repo edit` ; tag `v1.5.0` posé le 2026-07-03 ; les objets Release
+  GitHub sont gérés par `scripts/release.sh` depuis la 1.5.1.)*
 
 - Démos enregistrées dans le README (proposition 05) :
   `docs/assets/demo-code-review.svg` (le skill `code-review` se
