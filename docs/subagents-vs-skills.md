@@ -63,8 +63,10 @@ architecture à divulgation progressive `reference/`) comme grille de
 lecture. Le skill reste la source de vérité de la *méthode* ; le
 subagent apporte l'*isolation*.
 
-Condition : le skill préchargé doit être installé là où le subagent
-tourne (via `install.sh`). S'il est absent, Claude Code l'ignore avec un
+Condition : le skill préchargé doit être disponible là où le subagent
+tourne — c'est le cas via `install.sh` comme via l'installation plugin
+(vérifié en session réelle : un agent du plugin résout le skill du même
+plugin par son nom court). S'il est absent, Claude Code l'ignore avec un
 warning — le subagent fonctionne, sans la grille préchargée.
 
 ## Les subagents fournis par ce repo

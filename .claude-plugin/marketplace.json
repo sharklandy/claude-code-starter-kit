@@ -10,7 +10,7 @@
       "source": "./",
       "strict": false,
       "description": "Le noyau du starter kit : 6 skills génériques développeur (revue de code à divulgation progressive, stratégie de test, vérification, débogage systématique, discipline d'agent, qualité de commit) + les 4 subagents à mémoire de projet.",
-      "version": "1.5.0",
+      "version": "1.5.1",
       "author": {
         "name": "sharklandy"
       },
@@ -38,7 +38,7 @@
       "source": "./",
       "strict": false,
       "description": "Le starter kit complet : les 21 skills (process/ + domains/, templates vague 1 inclus) + les 4 subagents à mémoire de projet.",
-      "version": "1.5.0",
+      "version": "1.5.1",
       "author": {
         "name": "sharklandy"
       },

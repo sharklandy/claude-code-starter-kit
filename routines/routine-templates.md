@@ -14,7 +14,7 @@
 
 **Contexte d'usage** : des retours utilisateurs (bugs, suggestions, plaintes) arrivent en continu sur un canal ou une file d'attente, et personne n'a le temps de tous les traiter au fil de l'eau.
 
-**Skills prérequis** : un skill de vérification pour votre stack (voir `skills/verify-frontend-change` ou `skills/verify-form-change`), et un skill de runbook de triage (voir `skills/bug-triage-runbook-template`).
+**Skills prérequis** : un skill de vérification pour votre stack (voir `skills/process/verify-frontend-change` ou `skills/process/verify-form-change`), et un skill de runbook de triage (voir `skills/process/bug-triage-runbook-template`).
 
 ```
 /schedule every hour: check <TODO: nom du canal, ex. #feedback> for
@@ -39,7 +39,7 @@ messages.
 
 **Contexte d'usage** : un ensemble de modules doit être porté d'une stack vers une autre, un module à la fois, avec vérification de parité à chaque étape — à exécuter de façon récurrente jusqu'à épuisement de la liste des modules restants.
 
-**Skills prérequis** : un skill de référence de migration (voir `skills/python-to-ts-migration-template`, à adapter si votre migration ne concerne pas Python → TypeScript).
+**Skills prérequis** : un skill de référence de migration (voir `skills/process/python-to-ts-migration-template`, à adapter si votre migration ne concerne pas Python → TypeScript).
 
 ```
 /schedule every day at 9am: check <TODO: chemin ou registre listant
@@ -66,7 +66,7 @@ cost per execution.
 
 **Contexte d'usage** : plusieurs branches sont ouvertes en parallèle et personne n'a le temps de surveiller manuellement l'état de leur CI chaque jour — certains échecs simples (flaky test, conflit de merge trivial, dépendance à réinstaller) traînent inutilement avant d'être corrigés.
 
-**Skills prérequis** : `skills/verify-code-change` et `skills/systematic-debugging`.
+**Skills prérequis** : `skills/process/verify-code-change` et `skills/process/systematic-debugging`.
 
 ```
 /schedule every day at 8am: check the CI status of all open branches

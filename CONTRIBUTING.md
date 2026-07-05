@@ -17,6 +17,27 @@ Merci de vouloir contribuer à ce starter kit ! Ce document décrit comment prop
 3. Si le skill est généralisé à partir d'un cas d'usage réel ou fictif, retirez tout nom d'entreprise, de produit ou détail non réutilisable, et remplacez les valeurs spécifiques par des placeholders `<TODO: description de ce qu'il faut adapter>`.
 4. Testez que le skill se déclenche correctement dans une session Claude Code réelle avant de soumettre votre PR.
 5. Testez que `install.sh` installe correctement votre nouveau skill (mode `--local` sur un répertoire temporaire) avant de soumettre votre PR.
+6. Lancez le validateur structurel en local : `bash scripts/validate-skills.sh`. C'est exactement ce que la CI exécute sur chaque PR — frontmatter YAML commençant à l'octet 0 (rien avant le `---` d'ouverture), `name` en kebab-case ≤ 64 caractères identique au dossier, `description` non vide ≤ 1024 caractères, section `## Gotchas` non vide, aucun `<TODO:` hors skills `-template`, chemins de `marketplace.json` résolus sur le disque, liens relatifs des README valides, et skills préchargés par les subagents existants. Une PR qui échoue en local échouera en CI.
+
+## Évals de déclenchement (`evals/evals.json`)
+
+Les skills du noyau embarquent un dossier `evals/` contenant un `evals.json` au format [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) : `{ "skill_name": "<nom>", "evals": [{ "id", "prompt", "expected_output", "assertions": [...] }] }`. Si vous en ajoutez un à votre skill (optionnel mais bienvenu pour un skill de portée générale) :
+
+- `skill_name` doit être identique au nom du dossier du skill — la CI le vérifie, ainsi que la présence des champs requis ;
+- écrivez 2-3 prompts réalistes (formulations variées, au moins un cas limite) et des assertions **observables** (« la synthèse utilise les labels 🔴/🟠/🟡/⚪ »), pas des jugements vagues (« la sortie est bonne ») ;
+- l'exécution des évals reste manuelle (coût API) via le plugin `skill-creator` du marketplace officiel Anthropic — la CI ne valide que la structure du fichier.
+
+## Plugin et marketplace : ce qu'il faut savoir en contribuant
+
+Le dépôt est aussi un marketplace de plugins Claude Code (`.claude-plugin/marketplace.json`) exposant deux plugins :
+
+- **`starter-kit-full`** référence les répertoires `./skills/process` et `./skills/domains` entiers : un nouveau skill placé au bon endroit y est inclus **automatiquement**, rien à déclarer.
+- **`starter-kit-essentials`** liste ses 6 skills **individuellement** : si votre contribution a vocation à rejoindre le noyau, il faut l'ajouter explicitement à la liste `skills:` de cette entrée (décision mainteneur).
+- La CI compare chaque chemin déclaré dans `marketplace.json` au disque : renommer ou déplacer un dossier de skill sans mettre à jour le manifeste fait échouer la PR.
+
+## Releases (mainteneurs)
+
+Le champ `version` des deux entrées de `marketplace.json` **doit être bumpé à chaque release**, sinon les utilisateurs du plugin ne reçoivent jamais la mise à jour (la version épingle le contenu). La CI refuse un CHANGELOG dont la dernière release datée ne correspond pas à la version du marketplace. Utilisez `scripts/release.sh <version>` qui enchaîne : datage du CHANGELOG, bump des deux entrées, validation, tag et Release GitHub — et refuse de continuer si les versions divergent.
 
 ## Skills de domaine volumineux : le pattern `reference/`
 

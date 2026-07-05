@@ -124,10 +124,79 @@ EOF
 expect échec "octet 0" "subagent avec frontmatter décalé → détecté"
 cleanup
 
+# --- Cas 8 : marketplace.json pointant vers un skill inexistant ---------
+make_fixture
+mkdir -p "$FIXTURE/.claude-plugin"
+cat > "$FIXTURE/.claude-plugin/marketplace.json" <<'EOF'
+{
+  "name": "fixture-marketplace",
+  "owner": { "name": "fixture" },
+  "plugins": [
+    { "name": "fixture-plugin", "source": "./", "strict": false,
+      "version": "1.0.0",
+      "skills": ["./skills/process/does-not-exist"] }
+  ]
+}
+EOF
+expect échec "introuvable(s) sur le disque" "marketplace → chemin de skill inexistant → détecté"
+cleanup
+
+# --- Cas 9 : version marketplace ≠ dernière release du CHANGELOG --------
+# La classe d'oubli du finding 01 : release datée sans bump du marketplace.
+make_fixture
+mkdir -p "$FIXTURE/.claude-plugin"
+cat > "$FIXTURE/.claude-plugin/marketplace.json" <<'EOF'
+{
+  "name": "fixture-marketplace",
+  "owner": { "name": "fixture" },
+  "plugins": [
+    { "name": "fixture-plugin", "source": "./", "strict": false,
+      "version": "1.0.0",
+      "skills": ["./skills/process/good-skill"] }
+  ]
+}
+EOF
+cat > "$FIXTURE/CHANGELOG.md" <<'EOF'
+# Changelog
+
+## [1.1.0] - 2026-07-05
+
+### Ajouté
+
+- Une release datée sans bump du marketplace.
+EOF
+expect échec "dernière release du CHANGELOG" "version marketplace ≠ CHANGELOG → détecté"
+cleanup
+
+# --- Cas 10 : lien relatif cassé dans un README --------------------------
+make_fixture
+cat > "$FIXTURE/README.md" <<'EOF'
+# Fixture
+
+Voir [le guide](./docs/does-not-exist.md) pour le détail.
+EOF
+expect échec "lien relatif cassé" "README → lien relatif cassé → détecté"
+cleanup
+
+# --- Cas 11 : agent préchargeant un skill inexistant ---------------------
+make_fixture
+mkdir -p "$FIXTURE/.claude/agents"
+cat > "$FIXTURE/.claude/agents/preload-agent.md" <<'EOF'
+---
+name: preload-agent
+description: Agent de fixture qui précharge un skill absent.
+skills:
+  - ghost-skill
+---
+Corps.
+EOF
+expect échec "skill préchargé 'ghost-skill' introuvable" "agent → préchargement d'un skill absent → détecté"
+cleanup
+
 # --- Verdict -------------------------------------------------------------
 echo ""
 if [[ $FAILED -ne 0 ]]; then
   echo "✗ Self-test du validateur : au moins un cas a échoué."
   exit 1
 fi
-echo "✔ Self-test du validateur : 8/8 cas passés."
+echo "✔ Self-test du validateur : 12/12 cas passés."
