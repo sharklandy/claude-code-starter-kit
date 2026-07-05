@@ -73,7 +73,13 @@ while IFS= read -r -d '' skill_md; do
   dest_path="${DEST}/${skill_name}"
 
   if [[ -e "${dest_path}" ]]; then
-    read -r -p "Skill '${skill_name}' already exists in ${DEST}. Overwrite? [y/N] " reply
+    # Lire la réponse sur /dev/tty, pas sur stdin : stdin de cette boucle
+    # est la sortie de find (done < <(find ...)), un read dessus avalerait
+    # la liste des fichiers. Sans terminal (CI, pipe, </dev/null), un read
+    # impossible vaut "non" — sinon set -e tuerait le script en pleine boucle.
+    if ! read -r -p "Skill '${skill_name}' already exists in ${DEST}. Overwrite? [y/N] " reply < /dev/tty 2>/dev/null; then
+      reply=""
+    fi
     case "${reply}" in
       [yY]|[yY][eE][sS])
         rm -rf "${dest_path}"
@@ -111,7 +117,9 @@ if [[ -d "${AGENTS_SRC}" ]]; then
     agent_dest="${AGENTS_DEST}/${agent_file}"
 
     if [[ -e "${agent_dest}" ]]; then
-      read -r -p "Subagent '${agent_name}' already exists in ${AGENTS_DEST}. Overwrite? [y/N] " reply
+      if ! read -r -p "Subagent '${agent_name}' already exists in ${AGENTS_DEST}. Overwrite? [y/N] " reply < /dev/tty 2>/dev/null; then
+        reply=""
+      fi
       case "${reply}" in
         [yY]|[yY][eE][sS])
           rm -f "${agent_dest}"
