@@ -14,7 +14,7 @@
 /plugin install starter-kit-essentials@claude-code-starter-kit
 ```
 
-`starter-kit-essentials` installe le noyau : 6 skills génériques développeur + les 4 subagents. Pour tout le kit (21 skills, templates vague 1 inclus) :
+`starter-kit-essentials` installe le noyau : 6 skills génériques développeur + les 5 subagents. Pour tout le kit (21 skills, templates vague 1 inclus) :
 
 ```
 /plugin install starter-kit-full@claude-code-starter-kit
@@ -81,7 +81,8 @@ claude-code-starter-kit/
 │       ├── code-reviewer.md      # revue adversariale à contexte frais
 │       ├── test-runner.md        # build/tests/lint isolés, ne rapporte que les échecs
 │       ├── dependency-scout.md   # rapport d'impact avant un bump de dépendance
-│       └── bug-investigator.md   # reproduction + diagnostic de cause racine
+│       ├── bug-investigator.md   # reproduction + diagnostic de cause racine
+│       └── ui-ux-auditor.md      # audit UI/UX + accessibilité de toute l'app
 ├── skills/                       # skills prêts à l'emploi (SKILL.md + Gotchas)
 │   ├── process/                  # skills transverses, indépendants d'un domaine technique
 │   │   ├── verify-frontend-change/            # vague 1
@@ -171,14 +172,15 @@ Le [prompt d'onboarding](./docs/onboarding-prompt.md) automatise le remplissage 
 
 ## Subagents : les tâches qui méritent leur propre contexte
 
-En plus des skills, le repo fournit quatre **subagents** prêts à l'emploi (`.claude/agents/`, installés par `install.sh`). Un subagent tourne dans une fenêtre de contexte séparée, avec ses propres restrictions d'outils, et ne renvoie que sa synthèse — là où un skill guide la conversation principale :
+En plus des skills, le repo fournit cinq **subagents** prêts à l'emploi (`.claude/agents/`, installés par `install.sh`). Un subagent tourne dans une fenêtre de contexte séparée, avec ses propres restrictions d'outils, et ne renvoie que sa synthèse — là où un skill guide la conversation principale :
 
 - **`code-reviewer`** — revue adversariale à contexte frais : l'agent n'a pas vu comment le code a été écrit, ne peut pas l'éditer, et précharge le skill de domaine `code-review` comme grille de lecture.
 - **`test-runner`** — lance build/tests/lint (détectés depuis la CI du projet) et ne rapporte que les échecs ; la sortie verbeuse des tests ne pollue jamais votre conversation.
 - **`dependency-scout`** — avant un bump de dépendance, absorbe changelogs et recherche d'usages, et renvoie un rapport d'impact ; il n'applique jamais la mise à jour lui-même.
 - **`bug-investigator`** — reproduit, bissecte et confirme la cause racine d'un bug, puis rend un diagnostic avec preuves ; le correctif se décide dans la conversation principale.
+- **`ui-ux-auditor`** — audite tout le frontend d'un coup (pas un diff isolé) : repère d'abord le référentiel design propre au projet et le traite comme faisant autorité, détecte la dérive entre écrans construits à des sessions différentes, et sépare les findings confirmés par le code de ce qui nécessite une vérification visuelle réelle.
 
-Trois d'entre eux ont une **mémoire persistante par projet** (`memory: project`) : zones à risque, commandes de CI confirmées, tests flaky, patterns de bugs — des connaissances qui s'accumulent d'une session à l'autre et se partagent via git, au lieu d'être redécouvertes à chaque fois.
+Quatre d'entre eux ont une **mémoire persistante par projet** (`memory: project`) : zones à risque, commandes de CI confirmées, tests flaky, patterns de bugs, emplacement du référentiel design et dérives connues — des connaissances qui s'accumulent d'une session à l'autre et se partagent via git, au lieu d'être redécouvertes à chaque fois.
 
 Pour savoir quand créer un subagent plutôt qu'un skill (et pourquoi la plupart des briques doivent rester des skills), voir [`docs/subagents-vs-skills.md`](./docs/subagents-vs-skills.md).
 

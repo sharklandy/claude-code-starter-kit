@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0] - 2026-07-10
+
+### Ajouté
+
+- Nouveau subagent `ui-ux-auditor` (`.claude/agents/ui-ux-auditor.md`) :
+  audit complet UI/UX + accessibilité de toute l'application, pas d'un
+  diff isolé. Repère d'abord le référentiel design du projet (s'il
+  existe) et le traite comme faisant autorité plutôt que d'importer des
+  "best practices" génériques ; l'angle le plus rentable est la
+  détection de dérive entre écrans construits à des sessions
+  différentes. Mémoire de projet activée (`memory: project`). Ajouté
+  aux deux plugins (`starter-kit-essentials` et `starter-kit-full`) et
+  installé par `install.sh` comme les quatre autres subagents.
+
 ## [1.5.1] - 2026-07-05
 
 ### Corrigé

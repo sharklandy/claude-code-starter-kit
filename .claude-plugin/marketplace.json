@@ -9,8 +9,8 @@
       "name": "starter-kit-essentials",
       "source": "./",
       "strict": false,
-      "description": "Le noyau du starter kit : 6 skills génériques développeur (revue de code à divulgation progressive, stratégie de test, vérification, débogage systématique, discipline d'agent, qualité de commit) + les 4 subagents à mémoire de projet.",
-      "version": "1.5.1",
+      "description": "Le noyau du starter kit : 6 skills génériques développeur (revue de code à divulgation progressive, stratégie de test, vérification, débogage systématique, discipline d'agent, qualité de commit) + les 5 subagents à mémoire de projet.",
+      "version": "1.6.0",
       "author": {
         "name": "sharklandy"
       },
@@ -30,15 +30,16 @@
         "./.claude/agents/code-reviewer.md",
         "./.claude/agents/test-runner.md",
         "./.claude/agents/dependency-scout.md",
-        "./.claude/agents/bug-investigator.md"
+        "./.claude/agents/bug-investigator.md",
+        "./.claude/agents/ui-ux-auditor.md"
       ]
     },
     {
       "name": "starter-kit-full",
       "source": "./",
       "strict": false,
-      "description": "Le starter kit complet : les 21 skills (process/ + domains/, templates vague 1 inclus) + les 4 subagents à mémoire de projet.",
-      "version": "1.5.1",
+      "description": "Le starter kit complet : les 21 skills (process/ + domains/, templates vague 1 inclus) + les 5 subagents à mémoire de projet.",
+      "version": "1.6.0",
       "author": {
         "name": "sharklandy"
       },
@@ -54,7 +55,8 @@
         "./.claude/agents/code-reviewer.md",
         "./.claude/agents/test-runner.md",
         "./.claude/agents/dependency-scout.md",
-        "./.claude/agents/bug-investigator.md"
+        "./.claude/agents/bug-investigator.md",
+        "./.claude/agents/ui-ux-auditor.md"
       ]
     }
   ]

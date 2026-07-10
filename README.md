@@ -26,7 +26,7 @@ And the `test-runner` subagent running an entire test suite in its own context, 
 /plugin install starter-kit-essentials@claude-code-starter-kit
 ```
 
-`starter-kit-essentials` installs the core: 6 general-purpose developer skills plus the 4 subagents. For the whole kit (all 21 skills, wave-1 templates included):
+`starter-kit-essentials` installs the core: 6 general-purpose developer skills plus the 5 subagents. For the whole kit (all 21 skills, wave-1 templates included):
 
 ```
 /plugin install starter-kit-full@claude-code-starter-kit
@@ -81,7 +81,8 @@ claude-code-starter-kit/
 │       ├── code-reviewer.md      # fresh-context adversarial review
 │       ├── test-runner.md        # isolated build/test/lint, reports failures only
 │       ├── dependency-scout.md   # impact report before a dependency bump
-│       └── bug-investigator.md   # reproduction + root-cause diagnosis
+│       ├── bug-investigator.md   # reproduction + root-cause diagnosis
+│       └── ui-ux-auditor.md      # full-app UI/UX consistency + accessibility audit
 ├── skills/
 │   ├── process/                  # cross-cutting skills (19)
 │   └── domains/                  # domain skills, progressive disclosure when large
@@ -148,14 +149,15 @@ The [onboarding prompt](./docs/onboarding-prompt.md) automates the placeholder f
 
 ## Subagents: tasks that deserve their own context
 
-Beyond skills, the kit ships four ready-to-use **subagents** (`.claude/agents/`, installed by both the plugin and `install.sh`). A subagent runs in a separate context window, with its own tool restrictions, and returns only its summary — where a skill guides the main conversation:
+Beyond skills, the kit ships five ready-to-use **subagents** (`.claude/agents/`, installed by both the plugin and `install.sh`). A subagent runs in a separate context window, with its own tool restrictions, and returns only its summary — where a skill guides the main conversation:
 
 - **`code-reviewer`** — fresh-context adversarial review: the agent hasn't seen how the code was written, cannot edit it, and preloads the `code-review` domain skill as its review framework.
 - **`test-runner`** — runs build/tests/lint (detected from the project's CI) and reports only the failures; verbose test output never pollutes your conversation.
 - **`dependency-scout`** — before a dependency bump, absorbs changelogs and usage searches, and returns an impact report; it never applies the update itself.
 - **`bug-investigator`** — reproduces, bisects, and confirms a bug's root cause, then returns a diagnosis with evidence; the fix is decided in the main conversation.
+- **`ui-ux-auditor`** — audits the whole frontend at once (not a single diff): locates the project's own design-system doc first and treats it as authoritative, catches drift between screens built in different sessions, and separates confirmed code-level findings from things that need an actual visual check.
 
-Three of them have **persistent per-project memory** (`memory: project`): risk areas, confirmed CI commands, flaky tests, bug patterns — knowledge that accumulates across sessions and is shared through git instead of being rediscovered every time.
+Four of them have **persistent per-project memory** (`memory: project`): risk areas, confirmed CI commands, flaky tests, bug patterns, the design-doc location and known drift patterns — knowledge that accumulates across sessions and is shared through git instead of being rediscovered every time.
 
 To decide when a subagent beats a skill (and why most building blocks should stay skills), see [`docs/subagents-vs-skills.md`](./docs/subagents-vs-skills.md).
 
